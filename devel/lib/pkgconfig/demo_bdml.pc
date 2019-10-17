@@ -1,0 +1,8 @@
+prefix=/home/bdml/catkin_ws/devel
+
+Name: demo_bdml
+Description: Description of demo_bdml
+Version: 0.1.0
+Cflags: 
+Libs: -L/home/bdml/catkin_ws/devel/lib -lur_driver
+Requires: ur_driver

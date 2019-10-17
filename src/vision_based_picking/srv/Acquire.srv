@@ -1,0 +1,4 @@
+string the_request
+int16 cam_index
+---
+int16 status
