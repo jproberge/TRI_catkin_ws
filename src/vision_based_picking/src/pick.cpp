@@ -32,6 +32,7 @@
 #include <robotiq_2f_gripper_control/Robotiq2FGripper_robot_output.h>
 #include <ur_msgs/FollowCartesianTrajectoryAction.h>
 #include <actionlib/client/simple_action_client.h>
+#include <tf/transform_broadcaster.h>
 
 #define INTER_COMMAND_DELAY 8
 
@@ -75,8 +76,9 @@ int main(int argc, char **argv)
   Client client ("follow_cart_trajectory");
   client.waitForServer();
 
-  tf::Transform tfpose_init, tfpose_oriented, CalibrationPoseC1_P1, CalibrationPoseC1_P2, CalibrationPoseC1_P3, CalibrationPoseC2_P1, CalibrationPoseC2_P2, CalibrationPoseC2_P3,O_T_C1,O_T_C2,C1_T_F,C2_T_F,F_T_6,O_T_6,TmpPose1,TmpPose2; //Defining some poses instances
+  tf::Transform tfpose_init, tfpose_oriented, CalibrationPoseC1_P1, CalibrationPoseC1_P2, CalibrationPoseC1_P3, CalibrationPoseC2_P1, CalibrationPoseC2_P2, CalibrationPoseC2_P3,O_T_C1,O_T_C2,C1_T_F,C2_T_F,F_T_6,O_T_6,C1_T_C2,C2_T_C1,TmpPose1,TmpPose2; //Defining some poses instances
   tf::Vector3 ASetOfCoordinnates; // Translation/Position vectors
+  static tf::TransformBroadcaster br1, br2, br3;
 
   double P1x, P1y, P1z, P2x, P2y, P2z, P3x, P3y, P3z, eucl_dist;
   vector<double> C_x_F(3), C_y_F(3), C_z_F(3), V_cross_prod(3), My_Vec(3);
@@ -161,6 +163,7 @@ int main(int argc, char **argv)
     TmpPosition.setValue(t1,t2,t3);
     O_T_C1.setBasis(TmpRotation);
     O_T_C1.setOrigin(TmpPosition);
+
     cout << "O_T_C1: " << endl;
     cout << O_T_C1.getBasis().getRow(0).x() << " " << O_T_C1.getBasis().getRow(1).x() << " " << O_T_C1.getBasis().getRow(2).x() << " " << O_T_C1.getOrigin().getX() << endl;
     cout << O_T_C1.getBasis().getRow(0).y() << " " << O_T_C1.getBasis().getRow(1).y() << " " << O_T_C1.getBasis().getRow(2).y() << " " << O_T_C1.getOrigin().getY() << endl;
@@ -217,6 +220,21 @@ int main(int argc, char **argv)
     cout << O_T_C2.getBasis().getRow(0).x() << " " << O_T_C2.getBasis().getRow(1).x() << " " << O_T_C2.getBasis().getRow(2).x() << " " << O_T_C2.getOrigin().getX() << endl;
     cout << O_T_C2.getBasis().getRow(0).y() << " " << O_T_C2.getBasis().getRow(1).y() << " " << O_T_C2.getBasis().getRow(2).y() << " " << O_T_C2.getOrigin().getY() << endl;
     cout << O_T_C2.getBasis().getRow(0).z() << " " << O_T_C2.getBasis().getRow(1).z() << " " << O_T_C2.getBasis().getRow(2).z() << " " << O_T_C2.getOrigin().getZ() << endl;
+    cout << endl << endl;
+
+    C1_T_C2.mult(O_T_C1.inverse(),O_T_C2);
+    C2_T_C1.mult(O_T_C2.inverse(),O_T_C1);
+
+    cout << "C1_T_C2: " << endl;
+    cout << C1_T_C2.getBasis().getRow(0).x() << " " << C1_T_C2.getBasis().getRow(1).x() << " " << C1_T_C2.getBasis().getRow(2).x() << " " << C1_T_C2.getOrigin().getX() << endl;
+    cout << C1_T_C2.getBasis().getRow(0).y() << " " << C1_T_C2.getBasis().getRow(1).y() << " " << C1_T_C2.getBasis().getRow(2).y() << " " << C1_T_C2.getOrigin().getY() << endl;
+    cout << C1_T_C2.getBasis().getRow(0).z() << " " << C1_T_C2.getBasis().getRow(1).z() << " " << C1_T_C2.getBasis().getRow(2).z() << " " << C1_T_C2.getOrigin().getZ() << endl;
+    cout << endl << endl;
+
+    cout << "C2_T_C1: " << endl;
+    cout << C2_T_C1.getBasis().getRow(0).x() << " " << C2_T_C1.getBasis().getRow(1).x() << " " << C2_T_C1.getBasis().getRow(2).x() << " " << C2_T_C1.getOrigin().getX() << endl;
+    cout << C2_T_C1.getBasis().getRow(0).y() << " " << C2_T_C1.getBasis().getRow(1).y() << " " << C2_T_C1.getBasis().getRow(2).y() << " " << C2_T_C1.getOrigin().getY() << endl;
+    cout << C2_T_C1.getBasis().getRow(0).z() << " " << C2_T_C1.getBasis().getRow(1).z() << " " << C2_T_C1.getBasis().getRow(2).z() << " " << C2_T_C1.getOrigin().getZ() << endl;
     cout << endl << endl;
   }
   else
@@ -585,6 +603,24 @@ int main(int argc, char **argv)
 
     ExportMatrixToCSV(O_T_C2,"/home/bdml/catkin_ws/CalibrationMatrices/O_T_C2.csv");
     cout << "The calibration matrix O_T_C2 has been successfully saved!" << endl;
+
+    C1_T_C2.mult(O_T_C1.inverse(),O_T_C2);
+    C2_T_C1.mult(O_T_C2.inverse(),O_T_C1);
+
+    ExportMatrixToCSV(C1_T_C2,"/home/bdml/catkin_ws/CalibrationMatrices/C1_T_C2.csv");
+    ExportMatrixToCSV(C2_T_C1,"/home/bdml/catkin_ws/CalibrationMatrices/C2_T_C1.csv");
+
+    cout << "C1_T_C2: " << endl;
+    cout << C1_T_C2.getBasis().getRow(0).x() << " " << C1_T_C2.getBasis().getRow(1).x() << " " << C1_T_C2.getBasis().getRow(2).x() << " " << C1_T_C2.getOrigin().getX() << endl;
+    cout << C1_T_C2.getBasis().getRow(0).y() << " " << C1_T_C2.getBasis().getRow(1).y() << " " << C1_T_C2.getBasis().getRow(2).y() << " " << C1_T_C2.getOrigin().getY() << endl;
+    cout << C1_T_C2.getBasis().getRow(0).z() << " " << C1_T_C2.getBasis().getRow(1).z() << " " << C1_T_C2.getBasis().getRow(2).z() << " " << C1_T_C2.getOrigin().getZ() << endl;
+    cout << endl << endl;
+
+    cout << "C2_T_C1: " << endl;
+    cout << C2_T_C1.getBasis().getRow(0).x() << " " << C2_T_C1.getBasis().getRow(1).x() << " " << C2_T_C1.getBasis().getRow(2).x() << " " << C2_T_C1.getOrigin().getX() << endl;
+    cout << C2_T_C1.getBasis().getRow(0).y() << " " << C2_T_C1.getBasis().getRow(1).y() << " " << C2_T_C1.getBasis().getRow(2).y() << " " << C2_T_C1.getOrigin().getY() << endl;
+    cout << C2_T_C1.getBasis().getRow(0).z() << " " << C2_T_C1.getBasis().getRow(1).z() << " " << C2_T_C1.getBasis().getRow(2).z() << " " << C2_T_C1.getOrigin().getZ() << endl;
+    cout << endl << endl;
   }
 
 
@@ -596,6 +632,7 @@ int main(int argc, char **argv)
   robot.move_to_point(CalibrationPoseC1_P1,"base_link",0.1,client); //move to the home position to prevent visual occlusion
   client.waitForResult();
 
+
   // Starting the vision/LED segmentation process:
 //  int res = system("rosrun vision_based_picking FindRobotiqLedCam.py &");
 //  cout << "The system call exit code was: " << res << endl;
@@ -603,11 +640,17 @@ int main(int argc, char **argv)
 //  srv.request.cam_index=1;
 //  srv.request.the_request="Start";
 
-//  while (ros::ok())
-//  {
-//    ros::spinOnce();
-//    loop_rate.sleep();
-//  }
+
+
+  while (ros::ok())
+  {
+    br1.sendTransform(tf::StampedTransform(O_T_C1, ros::Time::now(), "world","O_T_C1"));
+    br1.sendTransform(tf::StampedTransform(O_T_C2, ros::Time::now(), "world","O_T_C2"));
+    br1.sendTransform(tf::StampedTransform(C1_T_C2, ros::Time::now(), "world","C1_T_C2"));
+
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
 
   ros::shutdown();
   std::cout << "Done!" << std::endl;

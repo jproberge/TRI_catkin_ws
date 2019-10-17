@@ -10,11 +10,12 @@
   </component>
   <component name="ProjectId" id="1S9DPxKkuqsEIezYZi6ODMX8HC0" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../src/vision_based_picking/scripts/FindRobotiqLedCam.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../src/vision_based_picking/scripts" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../src/vision_based_picking/scripts" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
