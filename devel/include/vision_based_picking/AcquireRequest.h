@@ -24,12 +24,10 @@ struct AcquireRequest_
   typedef AcquireRequest_<ContainerAllocator> Type;
 
   AcquireRequest_()
-    : the_request()
-    , cam_index(0)  {
+    : the_request()  {
     }
   AcquireRequest_(const ContainerAllocator& _alloc)
-    : the_request(_alloc)
-    , cam_index(0)  {
+    : the_request(_alloc)  {
   (void)_alloc;
     }
 
@@ -37,9 +35,6 @@ struct AcquireRequest_
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _the_request_type;
   _the_request_type the_request;
-
-   typedef int16_t _cam_index_type;
-  _cam_index_type cam_index;
 
 
 
@@ -119,12 +114,12 @@ struct MD5Sum< ::vision_based_picking::AcquireRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "cbd3bbe48e88ac081eadeeeb8701d7f3";
+    return "22502452ab0709536bffaf13d5a5287c";
   }
 
   static const char* value(const ::vision_based_picking::AcquireRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xcbd3bbe48e88ac08ULL;
-  static const uint64_t static_value2 = 0x1eadeeeb8701d7f3ULL;
+  static const uint64_t static_value1 = 0x22502452ab070953ULL;
+  static const uint64_t static_value2 = 0x6bffaf13d5a5287cULL;
 };
 
 template<class ContainerAllocator>
@@ -144,7 +139,6 @@ struct Definition< ::vision_based_picking::AcquireRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "string the_request\n\
-int16 cam_index\n\
 ";
   }
 
@@ -164,7 +158,6 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.the_request);
-      stream.next(m.cam_index);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -185,8 +178,6 @@ struct Printer< ::vision_based_picking::AcquireRequest_<ContainerAllocator> >
   {
     s << indent << "the_request: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.the_request);
-    s << indent << "cam_index: ";
-    Printer<int16_t>::stream(s, indent + "  ", v.cam_index);
   }
 };
 

@@ -22,7 +22,6 @@ class AcquireRequest {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.the_request = null;
-      this.cam_index = null;
     }
     else {
       if (initObj.hasOwnProperty('the_request')) {
@@ -31,12 +30,6 @@ class AcquireRequest {
       else {
         this.the_request = '';
       }
-      if (initObj.hasOwnProperty('cam_index')) {
-        this.cam_index = initObj.cam_index
-      }
-      else {
-        this.cam_index = 0;
-      }
     }
   }
 
@@ -44,8 +37,6 @@ class AcquireRequest {
     // Serializes a message object of type AcquireRequest
     // Serialize message field [the_request]
     bufferOffset = _serializer.string(obj.the_request, buffer, bufferOffset);
-    // Serialize message field [cam_index]
-    bufferOffset = _serializer.int16(obj.cam_index, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -55,15 +46,13 @@ class AcquireRequest {
     let data = new AcquireRequest(null);
     // Deserialize message field [the_request]
     data.the_request = _deserializer.string(buffer, bufferOffset);
-    // Deserialize message field [cam_index]
-    data.cam_index = _deserializer.int16(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += object.the_request.length;
-    return length + 6;
+    return length + 4;
   }
 
   static datatype() {
@@ -73,14 +62,13 @@ class AcquireRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'cbd3bbe48e88ac081eadeeeb8701d7f3';
+    return '22502452ab0709536bffaf13d5a5287c';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     string the_request
-    int16 cam_index
     
     `;
   }
@@ -96,13 +84,6 @@ class AcquireRequest {
     }
     else {
       resolved.the_request = ''
-    }
-
-    if (msg.cam_index !== undefined) {
-      resolved.cam_index = msg.cam_index;
-    }
-    else {
-      resolved.cam_index = 0
     }
 
     return resolved;
@@ -184,6 +165,6 @@ class AcquireResponse {
 module.exports = {
   Request: AcquireRequest,
   Response: AcquireResponse,
-  md5sum() { return '4cd58e4f9987399415b3ab1f2afe4e12'; },
+  md5sum() { return '0472ad368258a75cc77be2698c6aee5a'; },
   datatype() { return 'vision_based_picking/Acquire'; }
 };

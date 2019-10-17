@@ -20,31 +20,24 @@
 
 (defclass vision_based_picking::AcquireRequest
   :super ros::object
-  :slots (_the_request _cam_index ))
+  :slots (_the_request ))
 
 (defmethod vision_based_picking::AcquireRequest
   (:init
    (&key
     ((:the_request __the_request) "")
-    ((:cam_index __cam_index) 0)
     )
    (send-super :init)
    (setq _the_request (string __the_request))
-   (setq _cam_index (round __cam_index))
    self)
   (:the_request
    (&optional __the_request)
    (if __the_request (setq _the_request __the_request)) _the_request)
-  (:cam_index
-   (&optional __cam_index)
-   (if __cam_index (setq _cam_index __cam_index)) _cam_index)
   (:serialization-length
    ()
    (+
     ;; string _the_request
     4 (length _the_request)
-    ;; int16 _cam_index
-    2
     ))
   (:serialize
    (&optional strm)
@@ -52,16 +45,12 @@
               (make-string-output-stream (send self :serialization-length)))))
      ;; string _the_request
        (write-long (length _the_request) s) (princ _the_request s)
-     ;; int16 _cam_index
-       (write-word _cam_index s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
    ;; string _the_request
      (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _the_request (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
-   ;; int16 _cam_index
-     (setq _cam_index (sys::peek buf ptr- :short)) (incf ptr- 2)
    ;;
    self)
   )
@@ -107,7 +96,7 @@
   :super ros::object
   :slots ())
 
-(setf (get vision_based_picking::Acquire :md5sum-) "4cd58e4f9987399415b3ab1f2afe4e12")
+(setf (get vision_based_picking::Acquire :md5sum-) "0472ad368258a75cc77be2698c6aee5a")
 (setf (get vision_based_picking::Acquire :datatype-) "vision_based_picking/Acquire")
 (setf (get vision_based_picking::Acquire :request) vision_based_picking::AcquireRequest)
 (setf (get vision_based_picking::Acquire :response) vision_based_picking::AcquireResponse)
@@ -115,21 +104,19 @@
 (defmethod vision_based_picking::AcquireRequest
   (:response () (instance vision_based_picking::AcquireResponse :init)))
 
-(setf (get vision_based_picking::AcquireRequest :md5sum-) "4cd58e4f9987399415b3ab1f2afe4e12")
+(setf (get vision_based_picking::AcquireRequest :md5sum-) "0472ad368258a75cc77be2698c6aee5a")
 (setf (get vision_based_picking::AcquireRequest :datatype-) "vision_based_picking/AcquireRequest")
 (setf (get vision_based_picking::AcquireRequest :definition-)
       "string the_request
-int16 cam_index
 ---
 int16 status
 
 ")
 
-(setf (get vision_based_picking::AcquireResponse :md5sum-) "4cd58e4f9987399415b3ab1f2afe4e12")
+(setf (get vision_based_picking::AcquireResponse :md5sum-) "0472ad368258a75cc77be2698c6aee5a")
 (setf (get vision_based_picking::AcquireResponse :datatype-) "vision_based_picking/AcquireResponse")
 (setf (get vision_based_picking::AcquireResponse :definition-)
       "string the_request
-int16 cam_index
 ---
 int16 status
 
@@ -137,6 +124,6 @@ int16 status
 
 
 
-(provide :vision_based_picking/Acquire "4cd58e4f9987399415b3ab1f2afe4e12")
+(provide :vision_based_picking/Acquire "0472ad368258a75cc77be2698c6aee5a")
 
 

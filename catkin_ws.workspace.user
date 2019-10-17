@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.2, 2019-10-16T05:20:10. -->
+<!-- Written by QtCreator 4.9.2, 2019-10-16T18:13:57. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -105,8 +105,8 @@
     <value type="int" key="ProjectExplorer.BuildConfiguration.BuildStepListCount">2</value>
     <value type="bool" key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment">false</value>
     <valuelist type="QVariantList" key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges">
-     <value type="QString">OLDPWD</value>
-     <value type="QString">SHLVL=92</value>
+     <value type="QString">PWD=/home/bdml/catkin_ws</value>
+     <value type="QString">SHLVL=94</value>
      <value type="QString">TERM=xterm</value>
      <value type="QString">_=/usr/bin/env</value>
     </valuelist>

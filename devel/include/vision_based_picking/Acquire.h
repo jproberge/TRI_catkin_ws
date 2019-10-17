@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::vision_based_picking::Acquire > {
   static const char* value()
   {
-    return "4cd58e4f9987399415b3ab1f2afe4e12";
+    return "0472ad368258a75cc77be2698c6aee5a";
   }
 
   static const char* value(const ::vision_based_picking::Acquire&) { return value(); }

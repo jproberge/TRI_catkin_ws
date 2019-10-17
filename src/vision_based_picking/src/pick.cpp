@@ -34,7 +34,6 @@
 #include <actionlib/client/simple_action_client.h>
 
 #define INTER_COMMAND_DELAY 8
-#define PERFORM_CALIBRATION 0
 
 
 // Used for defining trajectory (i.e. multiple target poses to reach from a single command).
@@ -47,6 +46,8 @@ using namespace boost::posix_time;
 // Function prototypes:
 vector<double> cross_product(vector<double> V1, vector<double> V2);
 void ExportMatrixToCSV(tf::Transform Matrix, string filename);
+bool cmdOptionExists(char** begin, char** end, const string& option);
+char* getCmdOption(char ** begin, char ** end, const string & option);
 
 
 //  cout << "The pose is: " << APoseToReach1.getBasis().getRow(0).x() << " " << APoseToReach1.getBasis().getRow(0).y() << " " << APoseToReach1.getBasis().getRow(0).z() << " " << APoseToReach1.getBasis().getRow(0).w() << endl;
@@ -79,13 +80,22 @@ int main(int argc, char **argv)
 
   double P1x, P1y, P1z, P2x, P2y, P2z, P3x, P3y, P3z, eucl_dist;
   vector<double> C_x_F(3), C_y_F(3), C_z_F(3), V_cross_prod(3), My_Vec(3);
+  bool PerformCalibration=false;
 
+  if(cmdOptionExists(argv, argv+argc, "-CALIBRATE"))
+  {
+    PerformCalibration=true;
+  }
+  else
+  {
+    PerformCalibration=false;
+  }
 
 
   /**************************************************************************/
   /************************* CALIBRATION PROCEDURE **************************/
   /**************************************************************************/
-  if (PERFORM_CALIBRATION == 0)
+  if (PerformCalibration == false)
   {
     ifstream file1 ( "/home/bdml/catkin_ws/CalibrationMatrices/O_T_C1.csv" );
     ifstream file2 ( "/home/bdml/catkin_ws/CalibrationMatrices/O_T_C2.csv" );
@@ -624,4 +634,41 @@ void ExportMatrixToCSV(tf::Transform Matrix, string filename){
   myfile << Matrix.getBasis().getRow(0).y() << "," << Matrix.getBasis().getRow(1).y() << "," << Matrix.getBasis().getRow(2).y() << "," << Matrix.getOrigin().getY() << "," << endl;
   myfile << Matrix.getBasis().getRow(0).z() << "," << Matrix.getBasis().getRow(1).z() << "," << Matrix.getBasis().getRow(2).z() << "," << Matrix.getOrigin().getZ() << "," << endl;
   myfile.close();
+}
+
+
+
+/*****************************************************************************************
+//Function: cmdOptionExists
+//
+//Description:  This function check a string starting at **begin up to **end and tries
+//              to find the string defined by the argument &option. If it finds it, then
+//              it returns true, otherwise it will return false.
+//
+//Author: Jean-Philippe Roberge
+//Date: October 16th 2019
+*****************************************************************************************/
+bool cmdOptionExists(char** begin, char** end, const string& option)
+{
+    return find(begin, end, option) != end;
+}
+
+/****************************************************************************************
+//Function: getCmdOption
+//
+//Description:  This function check a string starting at **begin up to **end and tries
+//              to find the string defined by the argument &option. If it finds it, then
+//              it returns a pointer pointing just after the string that was found.
+//
+//Author: Jean-Philippe Roberge
+//Date: October 16th 2019
+****************************************************************************************/
+char* getCmdOption(char ** begin, char ** end, const string & option)
+{
+    char ** itr = find(begin, end, option);
+    if (itr != end && ++itr != end)
+    {
+        return *itr;
+    }
+    return 0;
 }

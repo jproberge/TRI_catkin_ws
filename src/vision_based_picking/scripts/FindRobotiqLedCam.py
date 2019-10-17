@@ -109,22 +109,35 @@ def segmented_led(pointcloud2):
     return Whole_Scene_Cloud, Segmented_Scene_Cloud
 
 
-def handle_acquire(req):
+def handle_calibrate(req):
     global CurrentRequest
     global CamID
     global have_received_a_cam_frame
     global mean_x
     global mean_y
     global mean_z
-    if req.the_request == "Acquire":
-        CurrentRequest="Acquire"
+    if req.the_request == "Start":
+        CurrentRequest="Start"
         CamID=req.cam_index
         print "We have receivend the request=", req.the_request, " with cam_index=", req.cam_index
-        return CalibrateResponse(1)
+        return CalibrateResponse(0,0,0)
+    elif req.the_request == "Get":
+        CurrentRequest="Get"
+        while have_received_a_cam_frame==0:
+            print "We still haven't received anything from vision"
+        time.sleep(2)
+        CamID=req.cam_index
+        print "We have receivend the request=", req.the_request, " with cam_index=", req.cam_index
+        return CalibrateResponse(mean_x,mean_y,mean_z)
+    elif req.the_request == "Shutdown":
+        CurrentRequest="Shutdown"
+        CamID=req.cam_index
+        print "We have receivend the request=", req.the_request, " with cam_index=", req.cam_index
+        return CalibrateResponse(0,0,0)
     else:
         CurrentRequest="Stop"
         CamID=req.cam_index
-        have_received_a_cam_frame=0
+        have_received_a_cam_frame = 0
         print "We have receivend the request=", req.the_request, " with cam_index=", req.cam_index
         return CalibrateResponse(0, 0, 0)
 
@@ -139,8 +152,8 @@ def draw_registration_result(source, target, transformation):
 
 
 if __name__ == "__main__":
-    rospy.init_node('acquire_scene', anonymous=True)
-    s = rospy.Service('acquire', Acquire, handle_acquire)
+    rospy.init_node('calibrate_scene', anonymous=True)
+    s = rospy.Service('calibrate', Calibrate, handle_calibrate)
     rate = rospy.Rate(30) # Let's try to match the cameras' FPS
     import os
     PYTHON_FILE_PATH = os.path.join(os.path.dirname(__file__)) + "/"
