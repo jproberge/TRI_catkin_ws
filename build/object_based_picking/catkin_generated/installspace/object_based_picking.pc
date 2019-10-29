@@ -1,8 +1,0 @@
-prefix=/home/bdml/catkin_ws/install
-
-Name: object_based_picking
-Description: Description of object_based_picking
-Version: 1.0.0
-Cflags: 
-Libs: -L/home/bdml/catkin_ws/install/lib -lur_driver
-Requires: ur_driver

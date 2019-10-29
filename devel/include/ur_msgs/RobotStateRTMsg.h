@@ -161,7 +161,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'ur_msgs': ['/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg', '/home/bdml/catkin_ws/devel/share/ur_msgs/msg']}
+// {'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg'], 'ur_msgs': ['/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -228,34 +228,34 @@ struct Definition< ::ur_msgs::RobotStateRTMsg_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# Data structure for the realtime communications interface (aka Matlab interface)\n\
-# used by the Universal Robots controller\n\
-# \n\
-# This data structure is send at 125 Hz on TCP port 30003\n\
-# \n\
-# Dokumentation can be found on the Universal Robots Support Wiki\n\
-# (http://wiki03.lynero.net/Technical/RealTimeClientInterface?rev=9)\n\
-\n\
-float64 time\n\
-float64[] q_target\n\
-float64[] qd_target\n\
-float64[] qdd_target\n\
-float64[] i_target\n\
-float64[] m_target\n\
-float64[] q_actual\n\
-float64[] qd_actual\n\
-float64[] i_actual\n\
-float64[] tool_acc_values\n\
-float64[] tcp_force\n\
-float64[] tool_vector\n\
-float64[] tcp_speed\n\
-float64 digital_input_bits\n\
-float64[] motor_temperatures\n\
-float64 controller_timer\n\
-float64 test_value\n\
-float64 robot_mode\n\
-float64[] joint_modes\n\
-";
+    return "# Data structure for the realtime communications interface (aka Matlab interface)\n"
+"# used by the Universal Robots controller\n"
+"# \n"
+"# This data structure is send at 125 Hz on TCP port 30003\n"
+"# \n"
+"# Dokumentation can be found on the Universal Robots Support Wiki\n"
+"# (http://wiki03.lynero.net/Technical/RealTimeClientInterface?rev=9)\n"
+"\n"
+"float64 time\n"
+"float64[] q_target\n"
+"float64[] qd_target\n"
+"float64[] qdd_target\n"
+"float64[] i_target\n"
+"float64[] m_target\n"
+"float64[] q_actual\n"
+"float64[] qd_actual\n"
+"float64[] i_actual\n"
+"float64[] tool_acc_values\n"
+"float64[] tcp_force\n"
+"float64[] tool_vector\n"
+"float64[] tcp_speed\n"
+"float64 digital_input_bits\n"
+"float64[] motor_temperatures\n"
+"float64 controller_timer\n"
+"float64 test_value\n"
+"float64 robot_mode\n"
+"float64[] joint_modes\n"
+;
   }
 
   static const char* value(const ::ur_msgs::RobotStateRTMsg_<ContainerAllocator>&) { return value(); }

@@ -63,10 +63,10 @@ struct MasterboardDataMsg_
 
 
 
-   typedef int16_t _digital_input_bits_type;
+   typedef uint32_t _digital_input_bits_type;
   _digital_input_bits_type digital_input_bits;
 
-   typedef int16_t _digital_output_bits_type;
+   typedef uint32_t _digital_output_bits_type;
   _digital_output_bits_type digital_output_bits;
 
    typedef int8_t _analog_input_range0_type;
@@ -146,7 +146,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'ur_msgs': ['/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg', '/home/bdml/catkin_ws/devel/share/ur_msgs/msg']}
+// {'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg'], 'ur_msgs': ['/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -189,12 +189,12 @@ struct MD5Sum< ::ur_msgs::MasterboardDataMsg_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "a4aa4d8ccbd10a18ef4008b679f6ccbe";
+    return "807af5dc427082b111fa23d1fd2cd585";
   }
 
   static const char* value(const ::ur_msgs::MasterboardDataMsg_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xa4aa4d8ccbd10a18ULL;
-  static const uint64_t static_value2 = 0xef4008b679f6ccbeULL;
+  static const uint64_t static_value1 = 0x807af5dc427082b1ULL;
+  static const uint64_t static_value2 = 0x11fa23d1fd2cd585ULL;
 };
 
 template<class ContainerAllocator>
@@ -213,34 +213,34 @@ struct Definition< ::ur_msgs::MasterboardDataMsg_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# This data structure contains the MasterboardData structure\n\
-# used by the Universal Robots controller\n\
-#\n\
-# MasterboardData is part of the data structure being send on the \n\
-# secondary client communications interface\n\
-# \n\
-# This data structure is send at 10 Hz on TCP port 30002\n\
-# \n\
-# Dokumentation can be found on the Universal Robots Support Wiki\n\
-# (http://wiki03.lynero.net/Technical/DataStreamFromURController?rev=8)\n\
-\n\
-int16 digital_input_bits\n\
-int16 digital_output_bits\n\
-int8 analog_input_range0\n\
-int8 analog_input_range1\n\
-float64 analog_input0\n\
-float64 analog_input1\n\
-int8 analog_output_domain0\n\
-int8 analog_output_domain1\n\
-float64 analog_output0\n\
-float64 analog_output1\n\
-float32 masterboard_temperature\n\
-float32 robot_voltage_48V\n\
-float32 robot_current\n\
-float32 master_io_current\n\
-uint8 master_safety_state\n\
-uint8 master_onoff_state\n\
-";
+    return "# This data structure contains the MasterboardData structure\n"
+"# used by the Universal Robots controller\n"
+"#\n"
+"# MasterboardData is part of the data structure being send on the \n"
+"# secondary client communications interface\n"
+"# \n"
+"# This data structure is send at 10 Hz on TCP port 30002\n"
+"# \n"
+"# Documentation can be found on the Universal Robots Support site, article\n"
+"# number 16496.\n"
+"\n"
+"uint32 digital_input_bits\n"
+"uint32 digital_output_bits\n"
+"int8 analog_input_range0\n"
+"int8 analog_input_range1\n"
+"float64 analog_input0\n"
+"float64 analog_input1\n"
+"int8 analog_output_domain0\n"
+"int8 analog_output_domain1\n"
+"float64 analog_output0\n"
+"float64 analog_output1\n"
+"float32 masterboard_temperature\n"
+"float32 robot_voltage_48V\n"
+"float32 robot_current\n"
+"float32 master_io_current\n"
+"uint8 master_safety_state\n"
+"uint8 master_onoff_state\n"
+;
   }
 
   static const char* value(const ::ur_msgs::MasterboardDataMsg_<ContainerAllocator>&) { return value(); }
@@ -293,9 +293,9 @@ struct Printer< ::ur_msgs::MasterboardDataMsg_<ContainerAllocator> >
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::ur_msgs::MasterboardDataMsg_<ContainerAllocator>& v)
   {
     s << indent << "digital_input_bits: ";
-    Printer<int16_t>::stream(s, indent + "  ", v.digital_input_bits);
+    Printer<uint32_t>::stream(s, indent + "  ", v.digital_input_bits);
     s << indent << "digital_output_bits: ";
-    Printer<int16_t>::stream(s, indent + "  ", v.digital_output_bits);
+    Printer<uint32_t>::stream(s, indent + "  ", v.digital_output_bits);
     s << indent << "analog_input_range0: ";
     Printer<int8_t>::stream(s, indent + "  ", v.analog_input_range0);
     s << indent << "analog_input_range1: ";

@@ -138,9 +138,9 @@ class MasterboardDataMsg {
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type MasterboardDataMsg
     // Serialize message field [digital_input_bits]
-    bufferOffset = _serializer.int16(obj.digital_input_bits, buffer, bufferOffset);
+    bufferOffset = _serializer.uint32(obj.digital_input_bits, buffer, bufferOffset);
     // Serialize message field [digital_output_bits]
-    bufferOffset = _serializer.int16(obj.digital_output_bits, buffer, bufferOffset);
+    bufferOffset = _serializer.uint32(obj.digital_output_bits, buffer, bufferOffset);
     // Serialize message field [analog_input_range0]
     bufferOffset = _serializer.int8(obj.analog_input_range0, buffer, bufferOffset);
     // Serialize message field [analog_input_range1]
@@ -177,9 +177,9 @@ class MasterboardDataMsg {
     let len;
     let data = new MasterboardDataMsg(null);
     // Deserialize message field [digital_input_bits]
-    data.digital_input_bits = _deserializer.int16(buffer, bufferOffset);
+    data.digital_input_bits = _deserializer.uint32(buffer, bufferOffset);
     // Deserialize message field [digital_output_bits]
-    data.digital_output_bits = _deserializer.int16(buffer, bufferOffset);
+    data.digital_output_bits = _deserializer.uint32(buffer, bufferOffset);
     // Deserialize message field [analog_input_range0]
     data.analog_input_range0 = _deserializer.int8(buffer, bufferOffset);
     // Deserialize message field [analog_input_range1]
@@ -212,7 +212,7 @@ class MasterboardDataMsg {
   }
 
   static getMessageSize(object) {
-    return 58;
+    return 62;
   }
 
   static datatype() {
@@ -222,7 +222,7 @@ class MasterboardDataMsg {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'a4aa4d8ccbd10a18ef4008b679f6ccbe';
+    return '807af5dc427082b111fa23d1fd2cd585';
   }
 
   static messageDefinition() {
@@ -236,11 +236,11 @@ class MasterboardDataMsg {
     # 
     # This data structure is send at 10 Hz on TCP port 30002
     # 
-    # Dokumentation can be found on the Universal Robots Support Wiki
-    # (http://wiki03.lynero.net/Technical/DataStreamFromURController?rev=8)
+    # Documentation can be found on the Universal Robots Support site, article
+    # number 16496.
     
-    int16 digital_input_bits
-    int16 digital_output_bits
+    uint32 digital_input_bits
+    uint32 digital_output_bits
     int8 analog_input_range0
     int8 analog_input_range1
     float64 analog_input0

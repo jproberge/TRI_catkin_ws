@@ -1,8 +1,8 @@
-# Install script for directory: /home/bdml/catkin_ws/src/universal_robot/ur_msgs
+# Install script for directory: /home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/bdml/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/michael/workspace/TRI_catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
+    set(CMAKE_INSTALL_CONFIG_NAME "")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -32,85 +32,75 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/msg" TYPE FILE FILES
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg/Analog.msg"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg/Digital.msg"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg/IOStates.msg"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg/RobotStateRTMsg.msg"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg/MasterboardDataMsg.msg"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg/ToolDataMsg.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/Analog.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/Digital.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/IOStates.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/RobotStateRTMsg.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/MasterboardDataMsg.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/RobotModeDataMsg.msg"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg/ToolDataMsg.msg"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/srv" TYPE FILE FILES
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/srv/SetPayload.srv"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/srv/SetIO.srv"
-    "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/srv/GripperMove.srv"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/srv/SetPayload.srv"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/srv/SetSpeedSliderFraction.srv"
+    "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/srv/SetIO.srv"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/action" TYPE FILE FILES "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/action/FollowCartesianTrajectory.action")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/cmake" TYPE FILE FILES "/home/michael/workspace/TRI_catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgs-msg-paths.cmake")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/msg" TYPE FILE FILES
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryAction.msg"
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryActionGoal.msg"
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryActionResult.msg"
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryActionFeedback.msg"
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryGoal.msg"
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryResult.msg"
-    "/home/bdml/catkin_ws/devel/share/ur_msgs/msg/FollowCartesianTrajectoryFeedback.msg"
-    )
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/michael/workspace/TRI_catkin_ws/devel/include/ur_msgs")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/cmake" TYPE FILE FILES "/home/bdml/catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgs-msg-paths.cmake")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/michael/workspace/TRI_catkin_ws/devel/share/roseus/ros/ur_msgs")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/bdml/catkin_ws/devel/include/ur_msgs")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/michael/workspace/TRI_catkin_ws/devel/share/common-lisp/ros/ur_msgs")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/bdml/catkin_ws/devel/share/roseus/ros/ur_msgs")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/michael/workspace/TRI_catkin_ws/devel/share/gennodejs/ros/ur_msgs")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/bdml/catkin_ws/devel/share/common-lisp/ros/ur_msgs")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  execute_process(COMMAND "/usr/bin/python2" -m compileall "/home/michael/workspace/TRI_catkin_ws/devel/lib/python2.7/dist-packages/ur_msgs")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/bdml/catkin_ws/devel/share/gennodejs/ros/ur_msgs")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/michael/workspace/TRI_catkin_ws/devel/lib/python2.7/dist-packages/ur_msgs")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  execute_process(COMMAND "/usr/bin/python" -m compileall "/home/bdml/catkin_ws/devel/lib/python2.7/dist-packages/ur_msgs")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/michael/workspace/TRI_catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgs.pc")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/bdml/catkin_ws/devel/lib/python2.7/dist-packages/ur_msgs")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/cmake" TYPE FILE FILES "/home/michael/workspace/TRI_catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgs-msg-extras.cmake")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/bdml/catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgs.pc")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/cmake" TYPE FILE FILES "/home/bdml/catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgs-msg-extras.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs/cmake" TYPE FILE FILES
-    "/home/bdml/catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgsConfig.cmake"
-    "/home/bdml/catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgsConfig-version.cmake"
+    "/home/michael/workspace/TRI_catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgsConfig.cmake"
+    "/home/michael/workspace/TRI_catkin_ws/build/universal_robot/ur_msgs/catkin_generated/installspace/ur_msgsConfig-version.cmake"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs" TYPE FILE FILES "/home/bdml/catkin_ws/src/universal_robot/ur_msgs/package.xml")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ur_msgs" TYPE FILE FILES "/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/package.xml")
 endif()
 

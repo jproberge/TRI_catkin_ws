@@ -1,10 +1,10 @@
 
 "use strict";
 
-let Calibrate = require('./Calibrate.js')
 let Acquire = require('./Acquire.js')
+let Calibrate = require('./Calibrate.js')
 
 module.exports = {
-  Calibrate: Calibrate,
   Acquire: Acquire,
+  Calibrate: Calibrate,
 };

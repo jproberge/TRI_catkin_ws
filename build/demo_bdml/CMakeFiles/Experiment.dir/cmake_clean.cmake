@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Experiment.dir/src/Experiment.cpp.o"
-  "/home/bdml/catkin_ws/devel/lib/demo_bdml/Experiment.pdb"
-  "/home/bdml/catkin_ws/devel/lib/demo_bdml/Experiment"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/demo_bdml/Experiment.pdb"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/demo_bdml/Experiment"
 )
 
 # Per-language clean rules from dependency scanning.

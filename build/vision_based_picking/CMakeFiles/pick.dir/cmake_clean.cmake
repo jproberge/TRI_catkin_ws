@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pick.dir/src/pick.cpp.o"
-  "/home/bdml/catkin_ws/devel/lib/vision_based_picking/pick.pdb"
-  "/home/bdml/catkin_ws/devel/lib/vision_based_picking/pick"
+  "CMakeFiles/pick.dir/src/calibration_utils.cpp.o"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/vision_based_picking/pick.pdb"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/vision_based_picking/pick"
 )
 
 # Per-language clean rules from dependency scanning.

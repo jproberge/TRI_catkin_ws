@@ -53,6 +53,11 @@ struct SetIORequest_
     FUN_SET_FLAG = 2,
     FUN_SET_ANALOG_OUT = 3,
     FUN_SET_TOOL_VOLTAGE = 4,
+    STATE_OFF = 0,
+    STATE_ON = 1,
+    STATE_TOOL_VOLTAGE_0V = 0,
+    STATE_TOOL_VOLTAGE_12V = 12,
+    STATE_TOOL_VOLTAGE_24V = 24,
   };
 
 
@@ -67,6 +72,16 @@ typedef boost::shared_ptr< ::ur_msgs::SetIORequest > SetIORequestPtr;
 typedef boost::shared_ptr< ::ur_msgs::SetIORequest const> SetIORequestConstPtr;
 
 // constants requiring out of line definition
+
+   
+
+   
+
+   
+
+   
+
+   
 
    
 
@@ -95,7 +110,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'ur_msgs': ['/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg', '/home/bdml/catkin_ws/devel/share/ur_msgs/msg']}
+// {'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg'], 'ur_msgs': ['/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -138,12 +153,12 @@ struct MD5Sum< ::ur_msgs::SetIORequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "144e866c50167f6d4b99948cba355b8c";
+    return "85200c86fbe60ea3e047bae3d6574bfd";
   }
 
   static const char* value(const ::ur_msgs::SetIORequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x144e866c50167f6dULL;
-  static const uint64_t static_value2 = 0x4b99948cba355b8cULL;
+  static const uint64_t static_value1 = 0x85200c86fbe60ea3ULL;
+  static const uint64_t static_value2 = 0xe047bae3d6574bfdULL;
 };
 
 template<class ContainerAllocator>
@@ -162,14 +177,47 @@ struct Definition< ::ur_msgs::SetIORequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "int8 FUN_SET_DIGITAL_OUT = 1\n\
-int8 FUN_SET_FLAG = 2\n\
-int8 FUN_SET_ANALOG_OUT = 3\n\
-int8 FUN_SET_TOOL_VOLTAGE = 4\n\
-int8 fun\n\
-int8 pin\n\
-float32 state\n\
-";
+    return "\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"int8 FUN_SET_DIGITAL_OUT = 1\n"
+"int8 FUN_SET_FLAG = 2\n"
+"int8 FUN_SET_ANALOG_OUT = 3\n"
+"int8 FUN_SET_TOOL_VOLTAGE = 4\n"
+"\n"
+"\n"
+"int8 STATE_OFF = 0\n"
+"int8 STATE_ON = 1\n"
+"\n"
+"\n"
+"int8 STATE_TOOL_VOLTAGE_0V = 0\n"
+"int8 STATE_TOOL_VOLTAGE_12V = 12\n"
+"int8 STATE_TOOL_VOLTAGE_24V = 24\n"
+"\n"
+"\n"
+"int8 fun\n"
+"int8 pin\n"
+"float32 state\n"
+;
   }
 
   static const char* value(const ::ur_msgs::SetIORequest_<ContainerAllocator>&) { return value(); }

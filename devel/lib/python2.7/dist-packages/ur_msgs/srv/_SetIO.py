@@ -7,13 +7,46 @@ import struct
 
 
 class SetIORequest(genpy.Message):
-  _md5sum = "144e866c50167f6d4b99948cba355b8c"
+  _md5sum = "85200c86fbe60ea3e047bae3d6574bfd"
   _type = "ur_msgs/SetIORequest"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """int8 FUN_SET_DIGITAL_OUT = 1
+  _full_text = """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int8 FUN_SET_DIGITAL_OUT = 1
 int8 FUN_SET_FLAG = 2
 int8 FUN_SET_ANALOG_OUT = 3
 int8 FUN_SET_TOOL_VOLTAGE = 4
+
+
+int8 STATE_OFF = 0
+int8 STATE_ON = 1
+
+
+int8 STATE_TOOL_VOLTAGE_0V = 0
+int8 STATE_TOOL_VOLTAGE_12V = 12
+int8 STATE_TOOL_VOLTAGE_24V = 24
+
+
 int8 fun
 int8 pin
 float32 state
@@ -23,6 +56,11 @@ float32 state
   FUN_SET_FLAG = 2
   FUN_SET_ANALOG_OUT = 3
   FUN_SET_TOOL_VOLTAGE = 4
+  STATE_OFF = 0
+  STATE_ON = 1
+  STATE_TOOL_VOLTAGE_0V = 0
+  STATE_TOOL_VOLTAGE_12V = 12
+  STATE_TOOL_VOLTAGE_24V = 24
 
   __slots__ = ['fun','pin','state']
   _slot_types = ['int8','int8','float32']
@@ -237,6 +275,6 @@ def _get_struct_B():
     return _struct_B
 class SetIO(object):
   _type          = 'ur_msgs/SetIO'
-  _md5sum = '9d07f372ae94a1b5e45efec9e2460429'
+  _md5sum = 'e1b580ccf43a938f2efbbb98bbe3e277'
   _request_class  = SetIORequest
   _response_class = SetIOResponse

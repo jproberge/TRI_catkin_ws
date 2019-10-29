@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::ur_msgs::SetIO > {
   static const char* value()
   {
-    return "9d07f372ae94a1b5e45efec9e2460429";
+    return "e1b580ccf43a938f2efbbb98bbe3e277";
   }
 
   static const char* value(const ::ur_msgs::SetIO&) { return value(); }

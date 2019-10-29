@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/listener.dir/src/listener.cpp.o"
-  "/home/bdml/catkin_ws/devel/lib/demo_bdml/listener.pdb"
-  "/home/bdml/catkin_ws/devel/lib/demo_bdml/listener"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/demo_bdml/listener.pdb"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/demo_bdml/listener"
 )
 
 # Per-language clean rules from dependency scanning.

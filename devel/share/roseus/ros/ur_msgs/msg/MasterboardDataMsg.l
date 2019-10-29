@@ -105,10 +105,10 @@
   (:serialization-length
    ()
    (+
-    ;; int16 _digital_input_bits
-    2
-    ;; int16 _digital_output_bits
-    2
+    ;; uint32 _digital_input_bits
+    4
+    ;; uint32 _digital_output_bits
+    4
     ;; int8 _analog_input_range0
     1
     ;; int8 _analog_input_range1
@@ -142,10 +142,10 @@
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; int16 _digital_input_bits
-       (write-word _digital_input_bits s)
-     ;; int16 _digital_output_bits
-       (write-word _digital_output_bits s)
+     ;; uint32 _digital_input_bits
+       (write-long _digital_input_bits s)
+     ;; uint32 _digital_output_bits
+       (write-long _digital_output_bits s)
      ;; int8 _analog_input_range0
        (write-byte _analog_input_range0 s)
      ;; int8 _analog_input_range1
@@ -178,10 +178,10 @@
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; int16 _digital_input_bits
-     (setq _digital_input_bits (sys::peek buf ptr- :short)) (incf ptr- 2)
-   ;; int16 _digital_output_bits
-     (setq _digital_output_bits (sys::peek buf ptr- :short)) (incf ptr- 2)
+   ;; uint32 _digital_input_bits
+     (setq _digital_input_bits (sys::peek buf ptr- :integer)) (incf ptr- 4)
+   ;; uint32 _digital_output_bits
+     (setq _digital_output_bits (sys::peek buf ptr- :integer)) (incf ptr- 4)
    ;; int8 _analog_input_range0
      (setq _analog_input_range0 (sys::peek buf ptr- :char)) (incf ptr- 1)
      (if (> _analog_input_range0 127) (setq _analog_input_range0 (- _analog_input_range0 256)))
@@ -218,7 +218,7 @@
    self)
   )
 
-(setf (get ur_msgs::MasterboardDataMsg :md5sum-) "a4aa4d8ccbd10a18ef4008b679f6ccbe")
+(setf (get ur_msgs::MasterboardDataMsg :md5sum-) "807af5dc427082b111fa23d1fd2cd585")
 (setf (get ur_msgs::MasterboardDataMsg :datatype-) "ur_msgs/MasterboardDataMsg")
 (setf (get ur_msgs::MasterboardDataMsg :definition-)
       "# This data structure contains the MasterboardData structure
@@ -229,11 +229,11 @@
 # 
 # This data structure is send at 10 Hz on TCP port 30002
 # 
-# Dokumentation can be found on the Universal Robots Support Wiki
-# (http://wiki03.lynero.net/Technical/DataStreamFromURController?rev=8)
+# Documentation can be found on the Universal Robots Support site, article
+# number 16496.
 
-int16 digital_input_bits
-int16 digital_output_bits
+uint32 digital_input_bits
+uint32 digital_output_bits
 int8 analog_input_range0
 int8 analog_input_range1
 float64 analog_input0
@@ -253,6 +253,6 @@ uint8 master_onoff_state
 
 
 
-(provide :ur_msgs/MasterboardDataMsg "a4aa4d8ccbd10a18ef4008b679f6ccbe")
+(provide :ur_msgs/MasterboardDataMsg "807af5dc427082b111fa23d1fd2cd585")
 
 

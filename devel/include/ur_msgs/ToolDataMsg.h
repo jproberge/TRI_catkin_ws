@@ -128,7 +128,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': True, 'IsMessage': True, 'HasHeader': False}
-// {'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'ur_msgs': ['/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg', '/home/bdml/catkin_ws/devel/share/ur_msgs/msg']}
+// {'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg'], 'ur_msgs': ['/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -195,27 +195,27 @@ struct Definition< ::ur_msgs::ToolDataMsg_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "# This data structure contains the ToolData structure\n\
-# used by the Universal Robots controller\n\
-\n\
-int8 ANALOG_INPUT_RANGE_CURRENT = 0\n\
-int8 ANALOG_INPUT_RANGE_VOLTAGE = 1\n\
-\n\
-int8 analog_input_range2 # one of ANALOG_INPUT_RANGE_*\n\
-int8 analog_input_range3 # one of ANALOG_INPUT_RANGE_*\n\
-float64 analog_input2\n\
-float64 analog_input3\n\
-float32 tool_voltage_48v\n\
-uint8 tool_output_voltage\n\
-float32 tool_current\n\
-float32 tool_temperature\n\
-\n\
-uint8 TOOL_BOOTLOADER_MODE = 249\n\
-uint8 TOOL_RUNNING_MODE = 253\n\
-uint8 TOOL_IDLE_MODE = 255\n\
-\n\
-uint8 tool_mode # one of TOOL_*\n\
-";
+    return "# This data structure contains the ToolData structure\n"
+"# used by the Universal Robots controller\n"
+"\n"
+"int8 ANALOG_INPUT_RANGE_CURRENT = 0\n"
+"int8 ANALOG_INPUT_RANGE_VOLTAGE = 1\n"
+"\n"
+"int8 analog_input_range2 # one of ANALOG_INPUT_RANGE_*\n"
+"int8 analog_input_range3 # one of ANALOG_INPUT_RANGE_*\n"
+"float64 analog_input2\n"
+"float64 analog_input3\n"
+"float32 tool_voltage_48v\n"
+"uint8 tool_output_voltage\n"
+"float32 tool_current\n"
+"float32 tool_temperature\n"
+"\n"
+"uint8 TOOL_BOOTLOADER_MODE = 249\n"
+"uint8 TOOL_RUNNING_MODE = 253\n"
+"uint8 TOOL_IDLE_MODE = 255\n"
+"\n"
+"uint8 tool_mode # one of TOOL_*\n"
+;
   }
 
   static const char* value(const ::ur_msgs::ToolDataMsg_<ContainerAllocator>&) { return value(); }

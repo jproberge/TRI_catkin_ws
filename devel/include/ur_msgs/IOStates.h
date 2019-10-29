@@ -96,7 +96,7 @@ namespace message_traits
 
 
 // BOOLTRAITS {'IsFixedSize': False, 'IsMessage': True, 'HasHeader': False}
-// {'std_msgs': ['/opt/ros/kinetic/share/std_msgs/cmake/../msg'], 'actionlib_msgs': ['/opt/ros/kinetic/share/actionlib_msgs/cmake/../msg'], 'geometry_msgs': ['/opt/ros/kinetic/share/geometry_msgs/cmake/../msg'], 'ur_msgs': ['/home/bdml/catkin_ws/src/universal_robot/ur_msgs/msg', '/home/bdml/catkin_ws/devel/share/ur_msgs/msg']}
+// {'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg'], 'ur_msgs': ['/home/michael/workspace/TRI_catkin_ws/src/universal_robot/ur_msgs/msg']}
 
 // !!!!!!!!!!! ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_parsed_fields', 'constants', 'fields', 'full_name', 'has_header', 'header_present', 'names', 'package', 'parsed_fields', 'short_name', 'text', 'types']
 
@@ -139,12 +139,12 @@ struct MD5Sum< ::ur_msgs::IOStates_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "0a5c7b73e3189e9a2caf8583d1bae2e2";
+    return "3033784e7041da89491b97cc4c1105b5";
   }
 
   static const char* value(const ::ur_msgs::IOStates_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x0a5c7b73e3189e9aULL;
-  static const uint64_t static_value2 = 0x2caf8583d1bae2e2ULL;
+  static const uint64_t static_value1 = 0x3033784e7041da89ULL;
+  static const uint64_t static_value2 = 0x491b97cc4c1105b5ULL;
 };
 
 template<class ContainerAllocator>
@@ -163,22 +163,26 @@ struct Definition< ::ur_msgs::IOStates_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "Digital[] digital_in_states\n\
-Digital[] digital_out_states\n\
-Digital[] flag_states\n\
-Analog[] analog_in_states\n\
-Analog[] analog_out_states\n\
-\n\
-================================================================================\n\
-MSG: ur_msgs/Digital\n\
-uint8 pin\n\
-bool state\n\
-\n\
-================================================================================\n\
-MSG: ur_msgs/Analog\n\
-uint8 pin\n\
-float32 state\n\
-";
+    return "Digital[] digital_in_states\n"
+"Digital[] digital_out_states\n"
+"Digital[] flag_states\n"
+"Analog[] analog_in_states\n"
+"Analog[] analog_out_states\n"
+"\n"
+"================================================================================\n"
+"MSG: ur_msgs/Digital\n"
+"uint8 pin\n"
+"bool state\n"
+"\n"
+"================================================================================\n"
+"MSG: ur_msgs/Analog\n"
+"uint8 VOLTAGE=0\n"
+"uint8 CURRENT=1\n"
+"\n"
+"uint8 pin\n"
+"uint8 domain # can be VOLTAGE or CURRENT\n"
+"float32 state\n"
+;
   }
 
   static const char* value(const ::ur_msgs::IOStates_<ContainerAllocator>&) { return value(); }

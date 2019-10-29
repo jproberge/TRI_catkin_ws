@@ -7,14 +7,22 @@ import struct
 
 
 class Analog(genpy.Message):
-  _md5sum = "341541c8828d055b6dcc443d40207a7d"
+  _md5sum = "f41c08a810adf63713aec88712cd553d"
   _type = "ur_msgs/Analog"
   _has_header = False #flag to mark the presence of a Header object
-  _full_text = """uint8 pin
+  _full_text = """uint8 VOLTAGE=0
+uint8 CURRENT=1
+
+uint8 pin
+uint8 domain # can be VOLTAGE or CURRENT
 float32 state
 """
-  __slots__ = ['pin','state']
-  _slot_types = ['uint8','float32']
+  # Pseudo-constants
+  VOLTAGE = 0
+  CURRENT = 1
+
+  __slots__ = ['pin','domain','state']
+  _slot_types = ['uint8','uint8','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +32,7 @@ float32 state
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       pin,state
+       pin,domain,state
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -35,10 +43,13 @@ float32 state
       #message fields cannot be None, assign default values for those that are
       if self.pin is None:
         self.pin = 0
+      if self.domain is None:
+        self.domain = 0
       if self.state is None:
         self.state = 0.
     else:
       self.pin = 0
+      self.domain = 0
       self.state = 0.
 
   def _get_types(self):
@@ -54,7 +65,7 @@ float32 state
     """
     try:
       _x = self
-      buff.write(_get_struct_Bf().pack(_x.pin, _x.state))
+      buff.write(_get_struct_2Bf().pack(_x.pin, _x.domain, _x.state))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -67,8 +78,8 @@ float32 state
       end = 0
       _x = self
       start = end
-      end += 5
-      (_x.pin, _x.state,) = _get_struct_Bf().unpack(str[start:end])
+      end += 6
+      (_x.pin, _x.domain, _x.state,) = _get_struct_2Bf().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -82,7 +93,7 @@ float32 state
     """
     try:
       _x = self
-      buff.write(_get_struct_Bf().pack(_x.pin, _x.state))
+      buff.write(_get_struct_2Bf().pack(_x.pin, _x.domain, _x.state))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -96,8 +107,8 @@ float32 state
       end = 0
       _x = self
       start = end
-      end += 5
-      (_x.pin, _x.state,) = _get_struct_Bf().unpack(str[start:end])
+      end += 6
+      (_x.pin, _x.domain, _x.state,) = _get_struct_2Bf().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -106,9 +117,9 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_Bf = None
-def _get_struct_Bf():
-    global _struct_Bf
-    if _struct_Bf is None:
-        _struct_Bf = struct.Struct("<Bf")
-    return _struct_Bf
+_struct_2Bf = None
+def _get_struct_2Bf():
+    global _struct_2Bf
+    if _struct_2Bf is None:
+        _struct_2Bf = struct.Struct("<2Bf")
+    return _struct_2Bf

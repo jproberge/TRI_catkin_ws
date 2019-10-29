@@ -25,7 +25,7 @@
 #include <boost/thread/thread.hpp>
 #include "sensor_msgs/JointState.h"
 #include "geometry_msgs/WrenchStamped.h"
-#include "vision_based_picking/Calibrate.h"
+//#include "vision_based_picking/Calibrate.h"
 #include "roboticArm.h"
 #include "URcontrolV2.h"
 #include <robotiq_2f_gripper_control/Robotiq2FGripper_robot_input.h>
@@ -33,6 +33,8 @@
 #include <ur_msgs/FollowCartesianTrajectoryAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include <tf/transform_broadcaster.h>
+
+#include "calibration_utils.h"
 
 #define INTER_COMMAND_DELAY 8
 
@@ -424,186 +426,7 @@ int main(int argc, char **argv)
 
 
 
-    // Showing the arm to camera #2:
-    CalibrationPoseC2_P1 = CalibrationPoseC1_P1;
-    ASetOfCoordinnates.setValue(-0.27,0.25,0.25); // Go in front of camera #2
-    CalibrationPoseC2_P1.setOrigin(ASetOfCoordinnates);
-    robot.move_to_point(CalibrationPoseC2_P1,"base_link",0.05,client); //move to the home position to prevent visual occlusion
-    client.waitForResult();
-
-    // Starting the vision/LED segmentation process:
-    res = system("rosrun vision_based_picking FindRobotiqLedCam.py &");
-    cout << "The system call exit code was: " << res << endl;
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.cam_index=2;
-    srv.request.the_request="Start";
-
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("The Start request was sent to the vision server");
-    }
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.the_request="Get";
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("Robotiq Led in Camera #2 frame: {%f, %f, %f,}",srv.response.x, srv.response.y, srv.response.z);
-      P1x=srv.response.x; P1y=srv.response.y; P1z=srv.response.z;
-    }
-    else
-    {
-      P1x=0; P1y=0; P1z=0;
-    }
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.the_request="Shutdown";
-    srv.request.cam_index=2;
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("The Shutdown request was sent to the vision server");
-    }
-
-
-    // Showing the P2 to camera #2:
-    ASetOfCoordinnates=CalibrationPoseC2_P1.getOrigin();
-    ASetOfCoordinnates.setX(CalibrationPoseC2_P1.getOrigin().getX()+0.1);
-    CalibrationPoseC2_P2.setOrigin(ASetOfCoordinnates);
-    CalibrationPoseC2_P2.setBasis(CalibrationPoseC2_P1.getBasis());
-    robot.move_to_point(CalibrationPoseC2_P2,"base_link",0.05,client); //move to the home position to prevent visual occlusion
-    client.waitForResult();
-
-    // Starting the vision/LED segmentation process:
-    res = system("rosrun vision_based_picking FindRobotiqLedCam.py &");
-    cout << "The system call exit code was: " << res << endl;
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.cam_index=2;
-    srv.request.the_request="Start";
-
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("The Start request was sent to the vision server");
-    }
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.the_request="Get";
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("Robotiq Led in Camera #2 frame: {%f, %f, %f,}",srv.response.x, srv.response.y, srv.response.z);
-      P2x=srv.response.x; P2y=srv.response.y; P2z=srv.response.z;
-    }
-    else
-    {
-      P2x=0; P2y=0; P2z=0;
-    }
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.the_request="Shutdown";
-    srv.request.cam_index=2;
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("The Shutdown request was sent to the vision server");
-    }
-
-    // Showing the P3 to camera #2:
-    ASetOfCoordinnates=CalibrationPoseC2_P1.getOrigin();
-    ASetOfCoordinnates.setZ(CalibrationPoseC2_P1.getOrigin().getZ()+0.1);
-    CalibrationPoseC2_P3.setOrigin(ASetOfCoordinnates);
-    CalibrationPoseC2_P3.setBasis(CalibrationPoseC2_P1.getBasis());
-    robot.move_to_point(CalibrationPoseC2_P3,"base_link",0.05,client); //move to the home position to prevent visual occlusion
-    client.waitForResult();
-
-    // Starting the vision/LED segmentation process:
-    res = system("rosrun vision_based_picking FindRobotiqLedCam.py &");
-    cout << "The system call exit code was: " << res << endl;
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.cam_index=2;
-    srv.request.the_request="Start";
-
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("The Start request was sent to the vision server");
-    }
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.the_request="Get";
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("Robotiq Led in Camera #2 frame: {%f, %f, %f,}",srv.response.x, srv.response.y, srv.response.z);
-      P3x=srv.response.x; P3y=srv.response.y; P3z=srv.response.z;
-    }
-    else
-    {
-      P3x=0; P3y=0; P3z=0;
-    }
-    sleep(INTER_COMMAND_DELAY); // give the vision process a bit of time to start
-    srv.request.the_request="Shutdown";
-    srv.request.cam_index=2;
-    if (srv_client.call(srv))
-    {
-      ROS_INFO("The Shutdown request was sent to the vision server");
-    }
-
-
-    // Solving camera #2's extrinsic calibration:
-    eucl_dist=sqrt(pow(P2x-P1x,2)+pow(P2y-P1y,2)+pow(P2z-P1z,2));
-    C_x_F[0]=(P2x-P1x)/eucl_dist; // The feature's x-axis, as seen in the camera's reference frame
-    C_x_F[1]=(P2y-P1y)/eucl_dist;
-    C_x_F[2]=(P2z-P1z)/eucl_dist;
-    cout << "The Euclidean distance is: " << eucl_dist << "The x unit vector is: [" << C_x_F[0] << "," <<C_x_F[1] <<"," << C_x_F[2] <<  endl;
-    My_Vec[0]=P3x-P1x;
-    My_Vec[1]=P3y-P1y;
-    My_Vec[2]=P3z-P1z;
-    V_cross_prod=cross_product(C_x_F,My_Vec);
-    eucl_dist=sqrt(pow(V_cross_prod[0],2)+pow(V_cross_prod[1],2)+pow(V_cross_prod[2],2));
-    C_y_F[0]=V_cross_prod[0]/eucl_dist;
-    C_y_F[1]=V_cross_prod[1]/eucl_dist;
-    C_y_F[2]=V_cross_prod[2]/eucl_dist;
-    cout << "The Euclidean distance is: " << eucl_dist << "The y unit vector is: [" << C_y_F[0] << "," <<C_y_F[1] <<"," << C_y_F[2] <<  endl;
-    C_z_F=cross_product(C_x_F,C_y_F);
-    cout << "The Euclidean distance is: " << eucl_dist << "The z unit vector is: [" << C_z_F[0] << "," <<C_z_F[1] <<"," << C_z_F[2] <<  endl;
-    O_T_6=CalibrationPoseC2_P1; // This could obviously be optimized, but I let it like that since it's more easy to understand how calibration is computed
-    F_T_6.setIdentity();
-    ASetOfCoordinnates.setValue(0,0.0375,-0.0115); // This is Robotiq's LED position in the end effector's frame
-    F_T_6.setOrigin(ASetOfCoordinnates);
-    TheOrientation.setValue(C_x_F[0],C_y_F[0],C_z_F[0],C_x_F[1],C_y_F[1],C_z_F[1],C_x_F[2],C_y_F[2],C_z_F[2]);
-    C2_T_F.setBasis(TheOrientation);
-    ASetOfCoordinnates.setValue(P1x,P1y,P1z);
-    C2_T_F.setOrigin(ASetOfCoordinnates);
-    TmpPose1.mult(C2_T_F,F_T_6); // = C2_T_6
-    TmpPose2.mult(TmpPose1,O_T_6.inverse()); // = C2_T_O
-    O_T_C2=TmpPose2.inverse(); // O_T_C2 a.k.a the calibration matrix
-    cout << endl << endl;
-    cout << "All computed transformation matrices:" << endl;
-    cout << endl << endl;
-    cout << "O_T_6" << endl;
-    cout << "The pose is: " << O_T_6.getBasis().getRow(0).x() << " " << O_T_6.getBasis().getRow(1).x() << " " << O_T_6.getBasis().getRow(2).x() << " " << O_T_6.getOrigin().getX() << endl;
-    cout << "The pose is: " << O_T_6.getBasis().getRow(0).y() << " " << O_T_6.getBasis().getRow(1).y() << " " << O_T_6.getBasis().getRow(2).y() << " " << O_T_6.getOrigin().getY() << endl;
-    cout << "The pose is: " << O_T_6.getBasis().getRow(0).z() << " " << O_T_6.getBasis().getRow(1).z() << " " << O_T_6.getBasis().getRow(2).z() << " " << O_T_6.getOrigin().getZ() << endl;
-    cout << endl << endl;
-    cout << "F_T_6" << endl;
-    cout << "The pose is: " << F_T_6.getBasis().getRow(0).x() << " " << F_T_6.getBasis().getRow(1).x() << " " << F_T_6.getBasis().getRow(2).x() << " " << F_T_6.getOrigin().getX() << endl;
-    cout << "The pose is: " << F_T_6.getBasis().getRow(0).y() << " " << F_T_6.getBasis().getRow(1).y() << " " << F_T_6.getBasis().getRow(2).y() << " " << F_T_6.getOrigin().getY() << endl;
-    cout << "The pose is: " << F_T_6.getBasis().getRow(0).z() << " " << F_T_6.getBasis().getRow(1).z() << " " << F_T_6.getBasis().getRow(2).z() << " " << F_T_6.getOrigin().getZ() << endl;
-    cout << endl << endl;
-    cout << "C2_T_F" << endl;
-    cout << "The pose is: " << C2_T_F.getBasis().getRow(0).x() << " " << C2_T_F.getBasis().getRow(1).x() << " " << C2_T_F.getBasis().getRow(2).x() << " " << C2_T_F.getOrigin().getX() << endl;
-    cout << "The pose is: " << C2_T_F.getBasis().getRow(0).y() << " " << C2_T_F.getBasis().getRow(1).y() << " " << C2_T_F.getBasis().getRow(2).y() << " " << C2_T_F.getOrigin().getY() << endl;
-    cout << "The pose is: " << C2_T_F.getBasis().getRow(0).z() << " " << C2_T_F.getBasis().getRow(1).z() << " " << C2_T_F.getBasis().getRow(2).z() << " " << C2_T_F.getOrigin().getZ() << endl;
-    cout << endl << endl;
-    cout << "C2_T_6" << endl;
-    cout << "The pose is: " << TmpPose1.getBasis().getRow(0).x() << " " << TmpPose1.getBasis().getRow(1).x() << " " << TmpPose1.getBasis().getRow(2).x() << " " << TmpPose1.getOrigin().getX() << endl;
-    cout << "The pose is: " << TmpPose1.getBasis().getRow(0).y() << " " << TmpPose1.getBasis().getRow(1).y() << " " << TmpPose1.getBasis().getRow(2).y() << " " << TmpPose1.getOrigin().getY() << endl;
-    cout << "The pose is: " << TmpPose1.getBasis().getRow(0).z() << " " << TmpPose1.getBasis().getRow(1).z() << " " << TmpPose1.getBasis().getRow(2).z() << " " << TmpPose1.getOrigin().getZ() << endl;
-    cout << endl << endl;
-    cout << "C2_T_0" << endl;
-    cout << "The pose is: " << TmpPose2.getBasis().getRow(0).x() << " " << TmpPose2.getBasis().getRow(1).x() << " " << TmpPose2.getBasis().getRow(2).x() << " " << TmpPose2.getOrigin().getX() << endl;
-    cout << "The pose is: " << TmpPose2.getBasis().getRow(0).y() << " " << TmpPose2.getBasis().getRow(1).y() << " " << TmpPose2.getBasis().getRow(2).y() << " " << TmpPose2.getOrigin().getY() << endl;
-    cout << "The pose is: " << TmpPose2.getBasis().getRow(0).z() << " " << TmpPose2.getBasis().getRow(1).z() << " " << TmpPose2.getBasis().getRow(2).z() << " " << TmpPose2.getOrigin().getZ() << endl;
-    cout << endl << endl;
-    cout << "O_T_C2" << endl;
-    cout << "The pose is: " << O_T_C2.getBasis().getRow(0).x() << " " << O_T_C2.getBasis().getRow(1).x() << " " << O_T_C2.getBasis().getRow(2).x() << " " << O_T_C2.getOrigin().getX() << endl;
-    cout << "The pose is: " << O_T_C2.getBasis().getRow(0).y() << " " << O_T_C2.getBasis().getRow(1).y() << " " << O_T_C2.getBasis().getRow(2).y() << " " << O_T_C2.getOrigin().getY() << endl;
-    cout << "The pose is: " << O_T_C2.getBasis().getRow(0).z() << " " << O_T_C2.getBasis().getRow(1).z() << " " << O_T_C2.getBasis().getRow(2).z() << " " << O_T_C2.getOrigin().getZ() << endl;
-    cout << endl << endl;
-
-    ExportMatrixToCSV(O_T_C2,"/home/bdml/catkin_ws/CalibrationMatrices/O_T_C2.csv");
-    cout << "The calibration matrix O_T_C2 has been successfully saved!" << endl;
-
+/*      savinng twocamerqasextrisics 
     C1_T_C2.mult(O_T_C1.inverse(),O_T_C2);
     C2_T_C1.mult(O_T_C2.inverse(),O_T_C1);
 
@@ -621,6 +444,7 @@ int main(int argc, char **argv)
     cout << C2_T_C1.getBasis().getRow(0).y() << " " << C2_T_C1.getBasis().getRow(1).y() << " " << C2_T_C1.getBasis().getRow(2).y() << " " << C2_T_C1.getOrigin().getY() << endl;
     cout << C2_T_C1.getBasis().getRow(0).z() << " " << C2_T_C1.getBasis().getRow(1).z() << " " << C2_T_C1.getBasis().getRow(2).z() << " " << C2_T_C1.getOrigin().getZ() << endl;
     cout << endl << endl;
+*/
   }
 
 

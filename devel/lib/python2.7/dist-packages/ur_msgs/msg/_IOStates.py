@@ -8,7 +8,7 @@ import struct
 import ur_msgs.msg
 
 class IOStates(genpy.Message):
-  _md5sum = "0a5c7b73e3189e9a2caf8583d1bae2e2"
+  _md5sum = "3033784e7041da89491b97cc4c1105b5"
   _type = "ur_msgs/IOStates"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """Digital[] digital_in_states
@@ -24,7 +24,11 @@ bool state
 
 ================================================================================
 MSG: ur_msgs/Analog
+uint8 VOLTAGE=0
+uint8 CURRENT=1
+
 uint8 pin
+uint8 domain # can be VOLTAGE or CURRENT
 float32 state
 """
   __slots__ = ['digital_in_states','digital_out_states','flag_states','analog_in_states','analog_out_states']
@@ -95,12 +99,12 @@ float32 state
       buff.write(_struct_I.pack(length))
       for val1 in self.analog_in_states:
         _x = val1
-        buff.write(_get_struct_Bf().pack(_x.pin, _x.state))
+        buff.write(_get_struct_2Bf().pack(_x.pin, _x.domain, _x.state))
       length = len(self.analog_out_states)
       buff.write(_struct_I.pack(length))
       for val1 in self.analog_out_states:
         _x = val1
-        buff.write(_get_struct_Bf().pack(_x.pin, _x.state))
+        buff.write(_get_struct_2Bf().pack(_x.pin, _x.domain, _x.state))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -165,8 +169,8 @@ float32 state
         val1 = ur_msgs.msg.Analog()
         _x = val1
         start = end
-        end += 5
-        (_x.pin, _x.state,) = _get_struct_Bf().unpack(str[start:end])
+        end += 6
+        (_x.pin, _x.domain, _x.state,) = _get_struct_2Bf().unpack(str[start:end])
         self.analog_in_states.append(val1)
       start = end
       end += 4
@@ -176,8 +180,8 @@ float32 state
         val1 = ur_msgs.msg.Analog()
         _x = val1
         start = end
-        end += 5
-        (_x.pin, _x.state,) = _get_struct_Bf().unpack(str[start:end])
+        end += 6
+        (_x.pin, _x.domain, _x.state,) = _get_struct_2Bf().unpack(str[start:end])
         self.analog_out_states.append(val1)
       return self
     except struct.error as e:
@@ -210,12 +214,12 @@ float32 state
       buff.write(_struct_I.pack(length))
       for val1 in self.analog_in_states:
         _x = val1
-        buff.write(_get_struct_Bf().pack(_x.pin, _x.state))
+        buff.write(_get_struct_2Bf().pack(_x.pin, _x.domain, _x.state))
       length = len(self.analog_out_states)
       buff.write(_struct_I.pack(length))
       for val1 in self.analog_out_states:
         _x = val1
-        buff.write(_get_struct_Bf().pack(_x.pin, _x.state))
+        buff.write(_get_struct_2Bf().pack(_x.pin, _x.domain, _x.state))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -281,8 +285,8 @@ float32 state
         val1 = ur_msgs.msg.Analog()
         _x = val1
         start = end
-        end += 5
-        (_x.pin, _x.state,) = _get_struct_Bf().unpack(str[start:end])
+        end += 6
+        (_x.pin, _x.domain, _x.state,) = _get_struct_2Bf().unpack(str[start:end])
         self.analog_in_states.append(val1)
       start = end
       end += 4
@@ -292,8 +296,8 @@ float32 state
         val1 = ur_msgs.msg.Analog()
         _x = val1
         start = end
-        end += 5
-        (_x.pin, _x.state,) = _get_struct_Bf().unpack(str[start:end])
+        end += 6
+        (_x.pin, _x.domain, _x.state,) = _get_struct_2Bf().unpack(str[start:end])
         self.analog_out_states.append(val1)
       return self
     except struct.error as e:
@@ -303,12 +307,12 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_Bf = None
-def _get_struct_Bf():
-    global _struct_Bf
-    if _struct_Bf is None:
-        _struct_Bf = struct.Struct("<Bf")
-    return _struct_Bf
+_struct_2Bf = None
+def _get_struct_2Bf():
+    global _struct_2Bf
+    if _struct_2Bf is None:
+        _struct_2Bf = struct.Struct("<2Bf")
+    return _struct_2Bf
 _struct_2B = None
 def _get_struct_2B():
     global _struct_2B

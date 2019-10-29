@@ -142,8 +142,8 @@ class IOStates {
     length += 2 * object.digital_in_states.length;
     length += 2 * object.digital_out_states.length;
     length += 2 * object.flag_states.length;
-    length += 5 * object.analog_in_states.length;
-    length += 5 * object.analog_out_states.length;
+    length += 6 * object.analog_in_states.length;
+    length += 6 * object.analog_out_states.length;
     return length + 20;
   }
 
@@ -154,7 +154,7 @@ class IOStates {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '0a5c7b73e3189e9a2caf8583d1bae2e2';
+    return '3033784e7041da89491b97cc4c1105b5';
   }
 
   static messageDefinition() {
@@ -173,7 +173,11 @@ class IOStates {
     
     ================================================================================
     MSG: ur_msgs/Analog
+    uint8 VOLTAGE=0
+    uint8 CURRENT=1
+    
     uint8 pin
+    uint8 domain # can be VOLTAGE or CURRENT
     float32 state
     
     `;

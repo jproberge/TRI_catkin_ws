@@ -10,12 +10,12 @@
   ((digital_input_bits
     :reader digital_input_bits
     :initarg :digital_input_bits
-    :type cl:fixnum
+    :type cl:integer
     :initform 0)
    (digital_output_bits
     :reader digital_output_bits
     :initarg :digital_output_bits
-    :type cl:fixnum
+    :type cl:integer
     :initform 0)
    (analog_input_range0
     :reader analog_input_range0
@@ -178,14 +178,14 @@
   (master_onoff_state m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <MasterboardDataMsg>) ostream)
   "Serializes a message object of type '<MasterboardDataMsg>"
-  (cl:let* ((signed (cl:slot-value msg 'digital_input_bits)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 65536) signed)))
-    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
-    )
-  (cl:let* ((signed (cl:slot-value msg 'digital_output_bits)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 65536) signed)))
-    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
-    )
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'digital_input_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'digital_input_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'digital_input_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'digital_input_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'digital_output_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'digital_output_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'digital_output_bits)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'digital_output_bits)) ostream)
   (cl:let* ((signed (cl:slot-value msg 'analog_input_range0)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 256) signed)))
     (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
     )
@@ -259,14 +259,14 @@
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <MasterboardDataMsg>) istream)
   "Deserializes a message object of type '<MasterboardDataMsg>"
-    (cl:let ((unsigned 0))
-      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
-      (cl:setf (cl:slot-value msg 'digital_input_bits) (cl:if (cl:< unsigned 32768) unsigned (cl:- unsigned 65536))))
-    (cl:let ((unsigned 0))
-      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
-      (cl:setf (cl:slot-value msg 'digital_output_bits) (cl:if (cl:< unsigned 32768) unsigned (cl:- unsigned 65536))))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'digital_input_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'digital_input_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'digital_input_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'digital_input_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'digital_output_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'digital_output_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'digital_output_bits)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'digital_output_bits)) (cl:read-byte istream))
     (cl:let ((unsigned 0))
       (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
       (cl:setf (cl:slot-value msg 'analog_input_range0) (cl:if (cl:< unsigned 128) unsigned (cl:- unsigned 256))))
@@ -355,20 +355,20 @@
   "ur_msgs/MasterboardDataMsg")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<MasterboardDataMsg>)))
   "Returns md5sum for a message object of type '<MasterboardDataMsg>"
-  "a4aa4d8ccbd10a18ef4008b679f6ccbe")
+  "807af5dc427082b111fa23d1fd2cd585")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'MasterboardDataMsg)))
   "Returns md5sum for a message object of type 'MasterboardDataMsg"
-  "a4aa4d8ccbd10a18ef4008b679f6ccbe")
+  "807af5dc427082b111fa23d1fd2cd585")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<MasterboardDataMsg>)))
   "Returns full string definition for message of type '<MasterboardDataMsg>"
-  (cl:format cl:nil "# This data structure contains the MasterboardData structure~%# used by the Universal Robots controller~%#~%# MasterboardData is part of the data structure being send on the ~%# secondary client communications interface~%# ~%# This data structure is send at 10 Hz on TCP port 30002~%# ~%# Dokumentation can be found on the Universal Robots Support Wiki~%# (http://wiki03.lynero.net/Technical/DataStreamFromURController?rev=8)~%~%int16 digital_input_bits~%int16 digital_output_bits~%int8 analog_input_range0~%int8 analog_input_range1~%float64 analog_input0~%float64 analog_input1~%int8 analog_output_domain0~%int8 analog_output_domain1~%float64 analog_output0~%float64 analog_output1~%float32 masterboard_temperature~%float32 robot_voltage_48V~%float32 robot_current~%float32 master_io_current~%uint8 master_safety_state~%uint8 master_onoff_state~%~%~%"))
+  (cl:format cl:nil "# This data structure contains the MasterboardData structure~%# used by the Universal Robots controller~%#~%# MasterboardData is part of the data structure being send on the ~%# secondary client communications interface~%# ~%# This data structure is send at 10 Hz on TCP port 30002~%# ~%# Documentation can be found on the Universal Robots Support site, article~%# number 16496.~%~%uint32 digital_input_bits~%uint32 digital_output_bits~%int8 analog_input_range0~%int8 analog_input_range1~%float64 analog_input0~%float64 analog_input1~%int8 analog_output_domain0~%int8 analog_output_domain1~%float64 analog_output0~%float64 analog_output1~%float32 masterboard_temperature~%float32 robot_voltage_48V~%float32 robot_current~%float32 master_io_current~%uint8 master_safety_state~%uint8 master_onoff_state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'MasterboardDataMsg)))
   "Returns full string definition for message of type 'MasterboardDataMsg"
-  (cl:format cl:nil "# This data structure contains the MasterboardData structure~%# used by the Universal Robots controller~%#~%# MasterboardData is part of the data structure being send on the ~%# secondary client communications interface~%# ~%# This data structure is send at 10 Hz on TCP port 30002~%# ~%# Dokumentation can be found on the Universal Robots Support Wiki~%# (http://wiki03.lynero.net/Technical/DataStreamFromURController?rev=8)~%~%int16 digital_input_bits~%int16 digital_output_bits~%int8 analog_input_range0~%int8 analog_input_range1~%float64 analog_input0~%float64 analog_input1~%int8 analog_output_domain0~%int8 analog_output_domain1~%float64 analog_output0~%float64 analog_output1~%float32 masterboard_temperature~%float32 robot_voltage_48V~%float32 robot_current~%float32 master_io_current~%uint8 master_safety_state~%uint8 master_onoff_state~%~%~%"))
+  (cl:format cl:nil "# This data structure contains the MasterboardData structure~%# used by the Universal Robots controller~%#~%# MasterboardData is part of the data structure being send on the ~%# secondary client communications interface~%# ~%# This data structure is send at 10 Hz on TCP port 30002~%# ~%# Documentation can be found on the Universal Robots Support site, article~%# number 16496.~%~%uint32 digital_input_bits~%uint32 digital_output_bits~%int8 analog_input_range0~%int8 analog_input_range1~%float64 analog_input0~%float64 analog_input1~%int8 analog_output_domain0~%int8 analog_output_domain1~%float64 analog_output0~%float64 analog_output1~%float32 masterboard_temperature~%float32 robot_voltage_48V~%float32 robot_current~%float32 master_io_current~%uint8 master_safety_state~%uint8 master_onoff_state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <MasterboardDataMsg>))
   (cl:+ 0
-     2
-     2
+     4
+     4
      1
      1
      8

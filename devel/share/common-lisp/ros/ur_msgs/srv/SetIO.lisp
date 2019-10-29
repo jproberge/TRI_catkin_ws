@@ -51,14 +51,24 @@
   '((:FUN_SET_DIGITAL_OUT . 1)
     (:FUN_SET_FLAG . 2)
     (:FUN_SET_ANALOG_OUT . 3)
-    (:FUN_SET_TOOL_VOLTAGE . 4))
+    (:FUN_SET_TOOL_VOLTAGE . 4)
+    (:STATE_OFF . 0)
+    (:STATE_ON . 1)
+    (:STATE_TOOL_VOLTAGE_0V . 0)
+    (:STATE_TOOL_VOLTAGE_12V . 12)
+    (:STATE_TOOL_VOLTAGE_24V . 24))
 )
 (cl:defmethod roslisp-msg-protocol:symbol-codes ((msg-type (cl:eql 'SetIO-request)))
     "Constants for message type 'SetIO-request"
   '((:FUN_SET_DIGITAL_OUT . 1)
     (:FUN_SET_FLAG . 2)
     (:FUN_SET_ANALOG_OUT . 3)
-    (:FUN_SET_TOOL_VOLTAGE . 4))
+    (:FUN_SET_TOOL_VOLTAGE . 4)
+    (:STATE_OFF . 0)
+    (:STATE_ON . 1)
+    (:STATE_TOOL_VOLTAGE_0V . 0)
+    (:STATE_TOOL_VOLTAGE_12V . 12)
+    (:STATE_TOOL_VOLTAGE_24V . 24))
 )
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <SetIO-request>) ostream)
   "Serializes a message object of type '<SetIO-request>"
@@ -98,16 +108,16 @@
   "ur_msgs/SetIORequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<SetIO-request>)))
   "Returns md5sum for a message object of type '<SetIO-request>"
-  "9d07f372ae94a1b5e45efec9e2460429")
+  "e1b580ccf43a938f2efbbb98bbe3e277")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'SetIO-request)))
   "Returns md5sum for a message object of type 'SetIO-request"
-  "9d07f372ae94a1b5e45efec9e2460429")
+  "e1b580ccf43a938f2efbbb98bbe3e277")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<SetIO-request>)))
   "Returns full string definition for message of type '<SetIO-request>"
-  (cl:format cl:nil "int8 FUN_SET_DIGITAL_OUT = 1~%int8 FUN_SET_FLAG = 2~%int8 FUN_SET_ANALOG_OUT = 3~%int8 FUN_SET_TOOL_VOLTAGE = 4~%int8 fun~%int8 pin~%float32 state~%~%~%"))
+  (cl:format cl:nil "~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%int8 FUN_SET_DIGITAL_OUT = 1~%int8 FUN_SET_FLAG = 2~%int8 FUN_SET_ANALOG_OUT = 3~%int8 FUN_SET_TOOL_VOLTAGE = 4~%~%~%int8 STATE_OFF = 0~%int8 STATE_ON = 1~%~%~%int8 STATE_TOOL_VOLTAGE_0V = 0~%int8 STATE_TOOL_VOLTAGE_12V = 12~%int8 STATE_TOOL_VOLTAGE_24V = 24~%~%~%int8 fun~%int8 pin~%float32 state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'SetIO-request)))
   "Returns full string definition for message of type 'SetIO-request"
-  (cl:format cl:nil "int8 FUN_SET_DIGITAL_OUT = 1~%int8 FUN_SET_FLAG = 2~%int8 FUN_SET_ANALOG_OUT = 3~%int8 FUN_SET_TOOL_VOLTAGE = 4~%int8 fun~%int8 pin~%float32 state~%~%~%"))
+  (cl:format cl:nil "~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%int8 FUN_SET_DIGITAL_OUT = 1~%int8 FUN_SET_FLAG = 2~%int8 FUN_SET_ANALOG_OUT = 3~%int8 FUN_SET_TOOL_VOLTAGE = 4~%~%~%int8 STATE_OFF = 0~%int8 STATE_ON = 1~%~%~%int8 STATE_TOOL_VOLTAGE_0V = 0~%int8 STATE_TOOL_VOLTAGE_12V = 12~%int8 STATE_TOOL_VOLTAGE_24V = 24~%~%~%int8 fun~%int8 pin~%float32 state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <SetIO-request>))
   (cl:+ 0
      1
@@ -160,10 +170,10 @@
   "ur_msgs/SetIOResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<SetIO-response>)))
   "Returns md5sum for a message object of type '<SetIO-response>"
-  "9d07f372ae94a1b5e45efec9e2460429")
+  "e1b580ccf43a938f2efbbb98bbe3e277")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'SetIO-response)))
   "Returns md5sum for a message object of type 'SetIO-response"
-  "9d07f372ae94a1b5e45efec9e2460429")
+  "e1b580ccf43a938f2efbbb98bbe3e277")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<SetIO-response>)))
   "Returns full string definition for message of type '<SetIO-response>"
   (cl:format cl:nil "bool success~%~%~%~%"))

@@ -30,6 +30,21 @@
 (intern "*FUN_SET_TOOL_VOLTAGE*" (find-package "UR_MSGS::SETIOREQUEST"))
 (shadow '*FUN_SET_TOOL_VOLTAGE* (find-package "UR_MSGS::SETIOREQUEST"))
 (defconstant ur_msgs::SetIORequest::*FUN_SET_TOOL_VOLTAGE* 4)
+(intern "*STATE_OFF*" (find-package "UR_MSGS::SETIOREQUEST"))
+(shadow '*STATE_OFF* (find-package "UR_MSGS::SETIOREQUEST"))
+(defconstant ur_msgs::SetIORequest::*STATE_OFF* 0)
+(intern "*STATE_ON*" (find-package "UR_MSGS::SETIOREQUEST"))
+(shadow '*STATE_ON* (find-package "UR_MSGS::SETIOREQUEST"))
+(defconstant ur_msgs::SetIORequest::*STATE_ON* 1)
+(intern "*STATE_TOOL_VOLTAGE_0V*" (find-package "UR_MSGS::SETIOREQUEST"))
+(shadow '*STATE_TOOL_VOLTAGE_0V* (find-package "UR_MSGS::SETIOREQUEST"))
+(defconstant ur_msgs::SetIORequest::*STATE_TOOL_VOLTAGE_0V* 0)
+(intern "*STATE_TOOL_VOLTAGE_12V*" (find-package "UR_MSGS::SETIOREQUEST"))
+(shadow '*STATE_TOOL_VOLTAGE_12V* (find-package "UR_MSGS::SETIOREQUEST"))
+(defconstant ur_msgs::SetIORequest::*STATE_TOOL_VOLTAGE_12V* 12)
+(intern "*STATE_TOOL_VOLTAGE_24V*" (find-package "UR_MSGS::SETIOREQUEST"))
+(shadow '*STATE_TOOL_VOLTAGE_24V* (find-package "UR_MSGS::SETIOREQUEST"))
+(defconstant ur_msgs::SetIORequest::*STATE_TOOL_VOLTAGE_24V* 24)
 (defclass ur_msgs::SetIORequest
   :super ros::object
   :slots (_fun _pin _state ))
@@ -132,7 +147,7 @@
   :super ros::object
   :slots ())
 
-(setf (get ur_msgs::SetIO :md5sum-) "9d07f372ae94a1b5e45efec9e2460429")
+(setf (get ur_msgs::SetIO :md5sum-) "e1b580ccf43a938f2efbbb98bbe3e277")
 (setf (get ur_msgs::SetIO :datatype-) "ur_msgs/SetIO")
 (setf (get ur_msgs::SetIO :request) ur_msgs::SetIORequest)
 (setf (get ur_msgs::SetIO :response) ur_msgs::SetIOResponse)
@@ -140,13 +155,46 @@
 (defmethod ur_msgs::SetIORequest
   (:response () (instance ur_msgs::SetIOResponse :init)))
 
-(setf (get ur_msgs::SetIORequest :md5sum-) "9d07f372ae94a1b5e45efec9e2460429")
+(setf (get ur_msgs::SetIORequest :md5sum-) "e1b580ccf43a938f2efbbb98bbe3e277")
 (setf (get ur_msgs::SetIORequest :datatype-) "ur_msgs/SetIORequest")
 (setf (get ur_msgs::SetIORequest :definition-)
-      "int8 FUN_SET_DIGITAL_OUT = 1
+      "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int8 FUN_SET_DIGITAL_OUT = 1
 int8 FUN_SET_FLAG = 2
 int8 FUN_SET_ANALOG_OUT = 3
 int8 FUN_SET_TOOL_VOLTAGE = 4
+
+
+int8 STATE_OFF = 0
+int8 STATE_ON = 1
+
+
+int8 STATE_TOOL_VOLTAGE_0V = 0
+int8 STATE_TOOL_VOLTAGE_12V = 12
+int8 STATE_TOOL_VOLTAGE_24V = 24
+
+
 int8 fun
 int8 pin
 float32 state
@@ -155,13 +203,46 @@ bool success
 
 ")
 
-(setf (get ur_msgs::SetIOResponse :md5sum-) "9d07f372ae94a1b5e45efec9e2460429")
+(setf (get ur_msgs::SetIOResponse :md5sum-) "e1b580ccf43a938f2efbbb98bbe3e277")
 (setf (get ur_msgs::SetIOResponse :datatype-) "ur_msgs/SetIOResponse")
 (setf (get ur_msgs::SetIOResponse :definition-)
-      "int8 FUN_SET_DIGITAL_OUT = 1
+      "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int8 FUN_SET_DIGITAL_OUT = 1
 int8 FUN_SET_FLAG = 2
 int8 FUN_SET_ANALOG_OUT = 3
 int8 FUN_SET_TOOL_VOLTAGE = 4
+
+
+int8 STATE_OFF = 0
+int8 STATE_ON = 1
+
+
+int8 STATE_TOOL_VOLTAGE_0V = 0
+int8 STATE_TOOL_VOLTAGE_12V = 12
+int8 STATE_TOOL_VOLTAGE_24V = 24
+
+
 int8 fun
 int8 pin
 float32 state
@@ -172,6 +253,6 @@ bool success
 
 
 
-(provide :ur_msgs/SetIO "9d07f372ae94a1b5e45efec9e2460429")
+(provide :ur_msgs/SetIO "e1b580ccf43a938f2efbbb98bbe3e277")
 
 

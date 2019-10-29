@@ -166,16 +166,16 @@
   "ur_msgs/IOStates")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<IOStates>)))
   "Returns md5sum for a message object of type '<IOStates>"
-  "0a5c7b73e3189e9a2caf8583d1bae2e2")
+  "3033784e7041da89491b97cc4c1105b5")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'IOStates)))
   "Returns md5sum for a message object of type 'IOStates"
-  "0a5c7b73e3189e9a2caf8583d1bae2e2")
+  "3033784e7041da89491b97cc4c1105b5")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<IOStates>)))
   "Returns full string definition for message of type '<IOStates>"
-  (cl:format cl:nil "Digital[] digital_in_states~%Digital[] digital_out_states~%Digital[] flag_states~%Analog[] analog_in_states~%Analog[] analog_out_states~%~%================================================================================~%MSG: ur_msgs/Digital~%uint8 pin~%bool state~%~%================================================================================~%MSG: ur_msgs/Analog~%uint8 pin~%float32 state~%~%~%"))
+  (cl:format cl:nil "Digital[] digital_in_states~%Digital[] digital_out_states~%Digital[] flag_states~%Analog[] analog_in_states~%Analog[] analog_out_states~%~%================================================================================~%MSG: ur_msgs/Digital~%uint8 pin~%bool state~%~%================================================================================~%MSG: ur_msgs/Analog~%uint8 VOLTAGE=0~%uint8 CURRENT=1~%~%uint8 pin~%uint8 domain # can be VOLTAGE or CURRENT~%float32 state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'IOStates)))
   "Returns full string definition for message of type 'IOStates"
-  (cl:format cl:nil "Digital[] digital_in_states~%Digital[] digital_out_states~%Digital[] flag_states~%Analog[] analog_in_states~%Analog[] analog_out_states~%~%================================================================================~%MSG: ur_msgs/Digital~%uint8 pin~%bool state~%~%================================================================================~%MSG: ur_msgs/Analog~%uint8 pin~%float32 state~%~%~%"))
+  (cl:format cl:nil "Digital[] digital_in_states~%Digital[] digital_out_states~%Digital[] flag_states~%Analog[] analog_in_states~%Analog[] analog_out_states~%~%================================================================================~%MSG: ur_msgs/Digital~%uint8 pin~%bool state~%~%================================================================================~%MSG: ur_msgs/Analog~%uint8 VOLTAGE=0~%uint8 CURRENT=1~%~%uint8 pin~%uint8 domain # can be VOLTAGE or CURRENT~%float32 state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <IOStates>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'digital_in_states) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

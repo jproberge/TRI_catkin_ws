@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/vision_based_picking_generate_messages_py"
-  "/home/bdml/catkin_ws/devel/lib/python2.7/dist-packages/vision_based_picking/srv/_Acquire.py"
-  "/home/bdml/catkin_ws/devel/lib/python2.7/dist-packages/vision_based_picking/srv/_Calibrate.py"
-  "/home/bdml/catkin_ws/devel/lib/python2.7/dist-packages/vision_based_picking/srv/__init__.py"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/python2.7/dist-packages/vision_based_picking/srv/_Acquire.py"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/python2.7/dist-packages/vision_based_picking/srv/_Calibrate.py"
+  "/home/michael/workspace/TRI_catkin_ws/devel/lib/python2.7/dist-packages/vision_based_picking/srv/__init__.py"
 )
 
 # Per-language clean rules from dependency scanning.

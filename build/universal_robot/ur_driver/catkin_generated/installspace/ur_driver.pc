@@ -1,8 +1,8 @@
-prefix=/home/bdml/catkin_ws/install
+prefix=/home/michael/workspace/TRI_catkin_ws/install
 
 Name: ur_driver
 Description: Description of ur_driver
-Version: 1.1.9
-Cflags: -I/home/bdml/catkin_ws/install/include
-Libs: -L/home/bdml/catkin_ws/install/lib -lroboticArm -lURcontrolV2
-Requires: dynamic_reconfigure message_runtime
+Version: 1.2.5
+Cflags: -I/home/michael/workspace/TRI_catkin_ws/install/include
+Libs: -L/home/michael/workspace/TRI_catkin_ws/install/lib 
+Requires: dynamic_reconfigure

@@ -82,16 +82,49 @@ class SetIORequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '144e866c50167f6d4b99948cba355b8c';
+    return '85200c86fbe60ea3e047bae3d6574bfd';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     int8 FUN_SET_DIGITAL_OUT = 1
     int8 FUN_SET_FLAG = 2
     int8 FUN_SET_ANALOG_OUT = 3
     int8 FUN_SET_TOOL_VOLTAGE = 4
+    
+    
+    int8 STATE_OFF = 0
+    int8 STATE_ON = 1
+    
+    
+    int8 STATE_TOOL_VOLTAGE_0V = 0
+    int8 STATE_TOOL_VOLTAGE_12V = 12
+    int8 STATE_TOOL_VOLTAGE_24V = 24
+    
+    
     int8 fun
     int8 pin
     float32 state
@@ -136,6 +169,11 @@ SetIORequest.Constants = {
   FUN_SET_FLAG: 2,
   FUN_SET_ANALOG_OUT: 3,
   FUN_SET_TOOL_VOLTAGE: 4,
+  STATE_OFF: 0,
+  STATE_ON: 1,
+  STATE_TOOL_VOLTAGE_0V: 0,
+  STATE_TOOL_VOLTAGE_12V: 12,
+  STATE_TOOL_VOLTAGE_24V: 24,
 }
 
 class SetIOResponse {
@@ -213,6 +251,6 @@ class SetIOResponse {
 module.exports = {
   Request: SetIORequest,
   Response: SetIOResponse,
-  md5sum() { return '9d07f372ae94a1b5e45efec9e2460429'; },
+  md5sum() { return 'e1b580ccf43a938f2efbbb98bbe3e277'; },
   datatype() { return 'ur_msgs/SetIO'; }
 };

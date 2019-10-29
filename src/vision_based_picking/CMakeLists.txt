@@ -8,6 +8,8 @@ project(vision_based_picking)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs ur_driver message_generation)
+find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -114,6 +116,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  src/
 )
 
 ## Declare a C++ library
@@ -204,5 +207,9 @@ include_directories(
 
 link_directories(/usr/local/lib)
 
-add_executable(pick src/pick.cpp)
-target_link_libraries(pick ${catkin_LIBRARIES})
+add_executable(pick 
+                src/pick.cpp 
+                src/calibration_utils.h
+                src/calibration_utils.cpp
+                )
+target_link_libraries(pick ${catkin_LIBRARIES} Eigen3::Eigen)

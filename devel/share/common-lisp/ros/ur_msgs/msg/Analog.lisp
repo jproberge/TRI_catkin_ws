@@ -12,6 +12,11 @@
     :initarg :pin
     :type cl:fixnum
     :initform 0)
+   (domain
+    :reader domain
+    :initarg :domain
+    :type cl:fixnum
+    :initform 0)
    (state
     :reader state
     :initarg :state
@@ -32,13 +37,29 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader ur_msgs-msg:pin-val is deprecated.  Use ur_msgs-msg:pin instead.")
   (pin m))
 
+(cl:ensure-generic-function 'domain-val :lambda-list '(m))
+(cl:defmethod domain-val ((m <Analog>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader ur_msgs-msg:domain-val is deprecated.  Use ur_msgs-msg:domain instead.")
+  (domain m))
+
 (cl:ensure-generic-function 'state-val :lambda-list '(m))
 (cl:defmethod state-val ((m <Analog>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader ur_msgs-msg:state-val is deprecated.  Use ur_msgs-msg:state instead.")
   (state m))
+(cl:defmethod roslisp-msg-protocol:symbol-codes ((msg-type (cl:eql '<Analog>)))
+    "Constants for message type '<Analog>"
+  '((:VOLTAGE . 0)
+    (:CURRENT . 1))
+)
+(cl:defmethod roslisp-msg-protocol:symbol-codes ((msg-type (cl:eql 'Analog)))
+    "Constants for message type 'Analog"
+  '((:VOLTAGE . 0)
+    (:CURRENT . 1))
+)
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <Analog>) ostream)
   "Serializes a message object of type '<Analog>"
   (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'pin)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'domain)) ostream)
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'state))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
@@ -48,6 +69,7 @@
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <Analog>) istream)
   "Deserializes a message object of type '<Analog>"
     (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'pin)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'domain)) (cl:read-byte istream))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
@@ -64,18 +86,19 @@
   "ur_msgs/Analog")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<Analog>)))
   "Returns md5sum for a message object of type '<Analog>"
-  "341541c8828d055b6dcc443d40207a7d")
+  "f41c08a810adf63713aec88712cd553d")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'Analog)))
   "Returns md5sum for a message object of type 'Analog"
-  "341541c8828d055b6dcc443d40207a7d")
+  "f41c08a810adf63713aec88712cd553d")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Analog>)))
   "Returns full string definition for message of type '<Analog>"
-  (cl:format cl:nil "uint8 pin~%float32 state~%~%~%"))
+  (cl:format cl:nil "uint8 VOLTAGE=0~%uint8 CURRENT=1~%~%uint8 pin~%uint8 domain # can be VOLTAGE or CURRENT~%float32 state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Analog)))
   "Returns full string definition for message of type 'Analog"
-  (cl:format cl:nil "uint8 pin~%float32 state~%~%~%"))
+  (cl:format cl:nil "uint8 VOLTAGE=0~%uint8 CURRENT=1~%~%uint8 pin~%uint8 domain # can be VOLTAGE or CURRENT~%float32 state~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Analog>))
   (cl:+ 0
+     1
      1
      4
 ))
@@ -83,5 +106,6 @@
   "Converts a ROS message object to a list"
   (cl:list 'Analog
     (cl:cons ':pin (pin msg))
+    (cl:cons ':domain (domain msg))
     (cl:cons ':state (state msg))
 ))
