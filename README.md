@@ -13,4 +13,4 @@ things michael had to install:
 - cloned new robotiq
 - catkin_make
 - rosdep install --from-paths src/ --ignore-src --rosdistro indigo
-
+- sudo apt-get install ros-melodic-gazebo-ros-control ros-melodic-gazebo-ros-pkgs
