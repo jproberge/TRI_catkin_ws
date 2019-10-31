@@ -8,7 +8,6 @@ project(vision_based_picking)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs ur_driver message_generation)
-find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
 
 ## System dependencies are found with CMake's conventions

@@ -98,7 +98,7 @@ class UR5Interface:
         self.group.set_pose_target(pose)
         # simulate in rviz then ask user for feedback
         plan = self.group.plan()
-        self.display_trajectory(plan)
+        #self.display_trajectory(plan)
         print("============ Press `Enter` to execute the movement ...")
         raw_input()
         self.group.execute(plan, wait=True)
@@ -150,7 +150,7 @@ def test_move():
         current_pose = ur5.get_pose()
         print "============ Current pose: %s" % current_pose
         
-        ur5.goto_home_pose()
+        #ur5.goto_home_pose()
 
         # go to P2
         P2_pose = ur5.get_pose()
