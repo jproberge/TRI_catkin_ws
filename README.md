@@ -22,6 +22,7 @@ workflow with hardware:
 - roslaunch ur5_moveit_config ur5_moveit_planning_execution.launch limited:=true
 # for rviz
 - roslaunch ur5_moveit_config moveit_rviz.launch config:=true
+- rosrun robotiq_2f_gripper_control Robotiq2FGripperRtuNode.py /dev/ttyUSB0
 - rosrun vision_based_picking FindRobotiqLedCam.py
 - rosrun vision_based_picking test_move.py
 
@@ -30,3 +31,4 @@ workflow with simulation:
 - roslaunch ur5_moveit_config demo.launch
 - rosrun vision_based_picking FindRobotiqLedCam.py
 - rosrun vision_based_picking test_move.py
+

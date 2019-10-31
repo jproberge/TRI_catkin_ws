@@ -74,6 +74,9 @@ class UR5Interface:
         print self.robot.get_current_state()
         print ""
 
+        self.group.set_max_acceleration_scaling_factor(0.5)
+        print "============ Set a max acceleration value of 0.5"
+
     def check_joint_limits(self):
         """ function to check that the urdf loaded is specifying
             smaller joint limits (-pi, pi) so that the planner works better """
@@ -199,11 +202,11 @@ def test_move():
         #print "============ Current pose: %s" % current_pose
 
         # Initialize robotiq publishers
-        #gripper_pub = rospy.Publisher('Robotiq2FGripperRobotOutput', outputMsg.Robotiq2FGripper_robot_output) 
-        #command = outputMsg.Robotiq2FGripper_robot_output()
+        gripper_pub = rospy.Publisher('Robotiq2FGripperRobotOutput', outputMsg.Robotiq2FGripper_robot_output) 
+        command = outputMsg.Robotiq2FGripper_robot_output()
         # command to open gripper
-        #command.rPR = 0
-        #grippe_pub.publish(command)
+        command.rPR = 0
+        grippe_pub.publish(command)
 
     except KeyboardInterrupt:
         rospy.signal_shutdown("KeyboardInterrupt")
