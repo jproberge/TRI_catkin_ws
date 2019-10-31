@@ -1,7 +1,0 @@
-uint8 pos
-uint8 force
-uint8 speed
-bool position_compensation
----
-bool success
-bool has_object

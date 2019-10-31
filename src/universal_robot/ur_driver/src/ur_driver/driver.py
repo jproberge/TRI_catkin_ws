@@ -8,18 +8,13 @@ import struct
 import traceback, code
 import optparse
 import SocketServer
-import tf
+
 import rospy
 import actionlib
-#**added by JK
-import numpy
-from tf.transformations import *
-import tf_conversions.posemath as pm
-#****
 from sensor_msgs.msg import JointState
 from control_msgs.msg import FollowJointTrajectoryAction
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-from geometry_msgs.msg import WrenchStamped, PoseStamped #PoseStamped added by JK
+from geometry_msgs.msg import WrenchStamped
 
 from dynamic_reconfigure.server import Server
 from ur_driver.cfg import URDriverConfig
@@ -29,7 +24,6 @@ from ur_driver.deserializeRT import RobotStateRT
 
 from ur_msgs.srv import SetPayload, SetIO
 from ur_msgs.msg import *
-from std_srvs.srv import Empty #added by JK
 
 # renaming classes
 DigitalIn = Digital
@@ -63,7 +57,6 @@ MSG_GET_IO = 11
 MSG_SET_FLAG = 12
 MSG_SET_TOOL_VOLTAGE = 13
 MSG_SET_ANALOG_OUT = 14
-MSG_MOVEL = 15
 MULT_payload = 1000.0
 MULT_wrench = 10000.0
 MULT_jointstate = 10000.0
@@ -406,12 +399,6 @@ def getConnectedRobot(wait=False, timeout=-1):
 
 # Receives messages from the robot over the socket
 class CommanderTCPHandler(SocketServer.BaseRequestHandler):
-    waypoint_id = 0
-
-    def __init__(self, request, client_address, server):
-        self._gripper_motion_completed = False
-        self._gripper_object_detected = False
-        SocketServer.BaseRequestHandler.__init__(self, request, client_address, server)
 
     def recv_more(self):
         global last_joint_states, last_joint_states_lock
@@ -463,9 +450,9 @@ class CommanderTCPHandler(SocketServer.BaseRequestHandler):
                 elif mtype == MSG_WAYPOINT_FINISHED:
                     while len(buf) < 4:
                         buf = buf + self.recv_more()
-                    self.waypoint_id = struct.unpack_from("!i", buf, 0)[0]
+                    waypoint_id = struct.unpack_from("!i", buf, 0)[0]
                     buf = buf[4:]
-                    print "Waypoint finished: ", self.waypoint_id
+                    print "Waypoint finished (not handled)"
                 else:
                     raise Exception("Unknown message type: %i" % mtype)
 
@@ -527,9 +514,7 @@ class CommanderTCPHandler(SocketServer.BaseRequestHandler):
 
     def send_stopj(self):
         self.__send_message([MSG_STOPJ])
-    def send_movel(self, pos):
-        pos.insert(0, MSG_MOVEL)
-        self.__send_message(pos)
+
     def set_waypoint_finished_cb(self, cb):
         self.waypoint_finished_cb = cb
 
@@ -652,102 +637,6 @@ class URServiceProvider(object):
         else:
             return False
         return True
-
-class URCartTrajectory(object): #added by JK 
-    def __init__(self, robot):
-        self.robot = robot
-        self.server = actionlib.SimpleActionServer("follow_cart_trajectory",
-                                             FollowCartesianTrajectoryAction,
-                                             execute_cb=self.execute_cb, auto_start=False)
-        self.goal_handle = None
-        self.cart_traj = None
-        self.tfl = tf.TransformListener()
-
-    def set_robot(self, robot):
-        # Cancels any goals in progress
-        if self.goal_handle:
-            self.goal_handle.set_canceled()
-            self.goal_handle = None
-        self.robot = robot
-
-    def start(self):
-        self.server.start()
-        print "The cartesian action server for this driver has been started"
-
-    def execute_cb(self, goal_handle):
-        log("ur_cart_as")
-        self.cart_traj = goal_handle
-        print "Trigger_movel"
-        for pose in self.cart_traj.poses:
-            if(goal_handle.header.frame_id == "base_link"):  #base changed to base_link (now base0? JK
-                p_ur_bl = pose
-		print "Holla"
-		print self.robot.waypoint_id #JK 
-            else:
-		print "at ja boi"
-                ps = PoseStamped()
-                ps.header = copy.deepcopy(goal_handle.header)
-                ps.header.stamp = rospy.Time(0)
-                ps.pose = copy.deepcopy(pose)
-                ps_ur_bl = self.tfl.transformPose("base_link", ps) #originally base
-                p_ur_bl = ps_ur_bl.pose
-                #print p_ur_bl
-
-            m = quaternion_matrix([p_ur_bl.orientation.x,
-                                   p_ur_bl.orientation.y,
-                                   p_ur_bl.orientation.z,
-                                   p_ur_bl.orientation.w])
-            angle, vect, point = rotation_from_matrix(m)
-            vector_angle = vect * angle
-
-            movel_speed = goal_handle.velocity
-  #added the *-1's JK??
-            params = [MULT_jointstate * movel_speed,
-                      MULT_jointstate * p_ur_bl.position.x*-1,
-                      MULT_jointstate * p_ur_bl.position.y*-1,
-                      MULT_jointstate * p_ur_bl.position.z,
-                      MULT_jointstate * vector_angle[0]*-1,
-                      MULT_jointstate * vector_angle[1],
-                      MULT_jointstate * vector_angle[2]]
-            self.robot.send_movel(params)
-
-            while(self.robot.waypoint_id != 424):
-                time.sleep(IO_SLEEP_TIME)
-
-            self.robot.waypoint_id = 0
-            print "Finished trajectory point"
-        rospy.loginfo('Succeeded')
-        self.server.set_succeeded(FollowCartesianTrajectoryResult())
-
-    #Taken from http://stackoverflow.com/questions/4870393/rotating-coordinate-system-via-a-quaternion
-    def normalize(self, v, tolerance=0.00001):
-        mag2 = sum(n * n for n in v)
-        if abs(mag2 - 1.0) > tolerance:
-            mag = math.sqrt(mag2)
-            v = tuple(n / mag for n in v)
-        return v
-
-    def quaternion2axisangle(self, quat):
-        w = quat.w
-        v = [quat.x, quat.y, quat.z]
-        theta = math.acos(w) * 2.0
-        nv = self.normalize(v)
-        return [nv[0] * theta, nv[1] * theta, nv[2] * theta]
-
-    #Not used yet
-    def axisangle2quaternion(self, rx, ry, rz):
-        import numpy
-        v = [rx, ry, rz]
-        theta = numpy.linalg.norm(numpy.array([rx, ry, rz]), ord=1)
-        print v, theta
-        v = self.normalize(v)
-        x, y, z = v
-        theta /= 2
-        w = math.cos(theta)
-        x = x * math.sin(theta)
-        y = y * math.sin(theta)
-        z = z * math.sin(theta)
-        print x, y, z, w
 
 class URTrajectoryFollower(object):
     RATE = 0.02
@@ -1065,12 +954,11 @@ def main():
     
     service_provider = None
     action_server = None
-    action_server_cart = None
     try:
         while not rospy.is_shutdown():
             # Checks for disconnect
             if getConnectedRobot(wait=False):
-                time.sleep(0.2) #upped from 0.2
+                time.sleep(0.2)
                 try:
                     prevent_programming = rospy.get_param("~prevent_programming")
                     update = {'prevent_programming': prevent_programming}
@@ -1085,8 +973,6 @@ def main():
                 print "Disconnected.  Reconnecting"
                 if action_server:
                     action_server.set_robot(None)
-                if action_server_cart:
-                    action_server_cart.set_robot(None)
 
                 rospy.loginfo("Programming the robot")
                 while True:
@@ -1119,13 +1005,6 @@ def main():
                 else:
                     action_server = URTrajectoryFollower(r, rospy.Duration(1.0))
                     action_server.start()
-
-                if action_server_cart:
-                    action_server_cart.set_robot(r)
-                else:
-                    action_server_cart = URCartTrajectory(r)
-                    action_server_cart.start()
-
 
     except KeyboardInterrupt:
         try:
