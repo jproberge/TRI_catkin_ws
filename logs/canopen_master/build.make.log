@@ -1,0 +1,6 @@
+[ 20%] [32mBuilding CXX object CMakeFiles/canopen_master.dir/src/objdict.cpp.o[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/canopen_master.dir/src/emcy.cpp.o[0m
+[ 30%] [32mBuilding CXX object CMakeFiles/canopen_master.dir/src/sdo.cpp.o[0m
+[ 40%] [32mBuilding CXX object CMakeFiles/canopen_master.dir/src/pdo.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/canopen_master.dir/src/node.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/canopen_bcm_sync.dir/src/bcm_sync.cpp.o[0m

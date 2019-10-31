@@ -15,7 +15,6 @@ def driverProg():
   MSG_SET_FLAG = 12
   MSG_SET_TOOL_VOLTAGE = 13
   MSG_SET_ANALOG_OUT = 14
-  MSG_MOVEL = 15
   MULT_wrench = 10000.0
   MULT_payload = 1000.0
   MULT_jointstate = 10000.0
@@ -219,23 +218,6 @@ def driverProg():
           send_out("Received no parameters for set_tool_voltage message")
         end
         set_tool_voltage(params_stv[1])
-      elif mtype == MSG_MOVEL:
-        send_out("Received MOVEL")
-        params_movel = socket_read_binary_integer(7)
-        if params_movel[0] == 0:
-          send_out("Received no parameters for set_digital_out message")
-        end
-        movel_vel = params_movel[1] / MULT_jointstate
-        goal = p[params_movel[2] / MULT_jointstate, params_movel[3] / MULT_jointstate, params_movel[4] / MULT_jointstate, params_movel[5] / MULT_jointstate, params_movel[6] / MULT_jointstate, params_movel[7] / MULT_jointstate]
-	send_out("goal")        
-	send_out(goal)
-	send_out("params_movel")        
-        send_out(params_movel)
-
-        textmsg("MOVEL pose = ", goal)
-        movel(goal, a=1.2, v=movel_vel, t=0, r=0)
-        send_out("Finished MOVEL")
-        send_waypoint_finished(424)
       else:
         send_out("Received unknown message type")
       end

@@ -2,6 +2,39 @@
 Changelog for package ur_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.5 (2019-04-05)
+------------------
+* Add transmission_hw_interface to UR xacro and expose everywhere (`#392 <https://github.com/ros-industrial/universal_robot/issues/392>`_)
+* Update maintainer listing: add Miguel (`#410 <https://github.com/ros-industrial/universal_robot/issues/410>`_)
+* Updated xacro namespace.
+* Update maintainer and author information.
+* Updated mesh ambience so the model isn't so dark in Gazebo
+* Fix overlapping variable names between robot definition files (`#356 <https://github.com/ros-industrial/universal_robot/issues/356>`_)
+* Improve meshes shading (`#233 <https://github.com/ros-industrial/universal_robot/issues/233>`_)
+* Added run_depend for xacro
+* Using the 'doc' attribute on 'arg' elements.
+* Enable self collision in gazebo
+* Contributors: Dave Niewinski, Felix von Drigalski, Harsh Deshpande, Joe, Marcel Schnirring, Miguel Prada, MonteroJJ, ipa-fxm
+
+1.2.1 (2018-01-06)
+------------------
+* Merge pull request `#329 <https://github.com//ros-industrial/universal_robot/issues/329>`_ from tecnalia-medical-robotics/joint_limits
+  Homogenize xacro macro arguments.
+* Merge pull request `#332 <https://github.com//ros-industrial/universal_robot/issues/332>`_ from davetcoleman/kinetic_hw_iface_warning
+  Remove UR3 ROS Control Hardware Interface warning
+* Remove UR3 ROS Control Hardware Interface warning
+* Extend changes to '_robot.urdf.xacro' variants as well.
+* Homogenize xacro macro arguments.
+  Joint limits for the limited version could be set using arguments for the UR10
+  but not for the UR3 and UR5. Same lower and upper limit arguments are added to
+  the UR3 and UR5 xacro macros.
+* Fix elbow joint limits (`#268 <https://github.com//ros-industrial/universal_robot/issues/268>`_)
+* Remove warning 'redefining global property: pi' (Jade+) (`#315 <https://github.com//ros-industrial/universal_robot/issues/315>`_)
+* Contributors: Beatriz Leon, Dave Coleman, Felix Messmer, Miguel Prada
+
+1.2.0 (2017-08-04)
+------------------
+
 1.1.9 (2017-01-02)
 ------------------
 * reintroduce 'pi', unbrake dependent xacros.

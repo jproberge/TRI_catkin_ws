@@ -1,0 +1,18 @@
+CMake Warning (dev) at CMakeLists.txt:54 (add_dependencies):
+  Policy CMP0046 is not set: Error on non-existent dependency in
+  add_dependencies.  Run "cmake --help-policy CMP0046" for policy details.
+  Use the cmake_policy command to set the policy and suppress this warning.
+
+  The dependency target "robotiq_ft_sensor_gencfg" of target "rq_test_sensor"
+  does not exist.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at CMakeLists.txt:50 (add_dependencies):
+  Policy CMP0046 is not set: Error on non-existent dependency in
+  add_dependencies.  Run "cmake --help-policy CMP0046" for policy details.
+  Use the cmake_policy command to set the policy and suppress this warning.
+
+  The dependency target "robotiq_ft_sensor_gencfg" of target "rq_sensor" does
+  not exist.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+

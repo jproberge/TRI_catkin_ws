@@ -1,0 +1,49 @@
+Not searching for unused variables given on the command line.
+[36m--[0m Using CATKIN_DEVEL_PREFIX: /home/michael/workspace/TRI_catkin_ws/devel/.private/realsense2_camera
+[36m--[0m Using CMAKE_PREFIX_PATH: /home/michael/workspace/TRI_catkin_ws/devel;/opt/ros/melodic
+[36m--[0m This workspace overlays: /home/michael/workspace/TRI_catkin_ws/devel;/opt/ros/melodic
+[36m--[0m Found PythonInterp: /usr/bin/python2 (found suitable version "2.7.15", minimum required is "2")
+[36m--[0m Using PYTHON_EXECUTABLE: /usr/bin/python2
+[36m--[0m Using Debian Python package layout
+[36m--[0m Using empy: /usr/bin/empy
+[36m--[0m Using CATKIN_ENABLE_TESTING: ON
+[36m--[0m Call enable_testing()
+[36m--[0m Using CATKIN_TEST_RESULTS_DIR: /home/michael/workspace/TRI_catkin_ws/build/realsense2_camera/test_results
+[36m--[0m Found gmock sources under '/usr/src/googletest': gmock will be built
+[36m--[0m Found PythonInterp: /usr/bin/python2 (found version "2.7.15")
+[36m--[0m Found gtest sources under '/usr/src/googletest': gtests will be built
+[36m--[0m Using Python nosetests: /usr/bin/nosetests-2.7
+[36m--[0m catkin 0.7.17
+[36m--[0m BUILD_SHARED_LIBS is on
+[36m--[0m Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+[33m[1mCMake Warning[0m at /home/michael/workspace/TRI_catkin_ws/src/realsense-ros/realsense2_camera/CMakeLists.txt:37 (find_package):
+  By not providing "Findrealsense2.cmake" in CMAKE_MODULE_PATH this project
+  has asked CMake to find a package configuration file provided by
+  "realsense2", but CMake did not find one.
+
+  Could not find a package configuration file provided by "realsense2"
+  (requested version 2.25.0) with any of the following names:
+
+    realsense2Config.cmake
+    realsense2-config.cmake
+
+  Add the installation prefix of "realsense2" to CMAKE_PREFIX_PATH or set
+  "realsense2_DIR" to a directory containing one of the above files.  If
+  "realsense2" provides a separate development package or SDK, be sure it has
+  been installed.
+
+
+[31m[1mCMake Error[0m at /home/michael/workspace/TRI_catkin_ws/src/realsense-ros/realsense2_camera/CMakeLists.txt:39 (message):
+
+
+
+
+   Intel RealSense SDK 2.0 is missing, please install it from https://github.com/IntelRealSense/librealsense/releases
+
+
+
+
+
+[36m--[0m Configuring incomplete, errors occurred!
+See also "/home/michael/workspace/TRI_catkin_ws/build/realsense2_camera/CMakeFiles/CMakeOutput.log".
+See also "/home/michael/workspace/TRI_catkin_ws/build/realsense2_camera/CMakeFiles/CMakeError.log".

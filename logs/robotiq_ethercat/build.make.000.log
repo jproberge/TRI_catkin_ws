@@ -1,0 +1,4 @@
+[35m[1mScanning dependencies of target robotiq_ethercat[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/robotiq_ethercat.dir/src/ethercat_manager.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library /home/michael/workspace/TRI_catkin_ws/devel/.private/robotiq_ethercat/lib/librobotiq_ethercat.so[0m
+[100%] Built target robotiq_ethercat

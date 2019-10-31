@@ -2,6 +2,18 @@
 Changelog for package ur_driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.5 (2019-04-05)
+------------------
+* Update maintainer listing: add Miguel (`#410 <https://github.com/ros-industrial/universal_robot/issues/410>`_)
+* update maintainer and author information.
+* Contributors: gavanderhoorn
+
+1.2.1 (2018-01-06)
+------------------
+
+1.2.0 (2017-08-04)
+------------------
+
 1.1.9 (2017-01-02)
 ------------------
 * No changes.
