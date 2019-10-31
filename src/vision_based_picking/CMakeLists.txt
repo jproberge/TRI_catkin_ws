@@ -207,9 +207,9 @@ include_directories(
 
 link_directories(/usr/local/lib)
 
-add_executable(pick 
-                src/pick.cpp 
-                src/calibration_utils.h
-                src/calibration_utils.cpp
-                )
-target_link_libraries(pick ${catkin_LIBRARIES} Eigen3::Eigen)
+#add_executable(pick 
+#                src/pick.cpp 
+#                src/calibration_utils.h
+#                src/calibration_utils.cpp
+#                )
+#target_link_libraries(pick ${catkin_LIBRARIES} Eigen3::Eigen)
