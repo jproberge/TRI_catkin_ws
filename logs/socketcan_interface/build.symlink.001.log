@@ -1,7 +1,0 @@
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/share/socketcan_interface/cmake/socketcan_interfaceConfig-version.cmake
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/share/socketcan_interface/cmake/socketcan_interfaceConfig.cmake
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/lib/libsocketcan_interface_string.so
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/lib/libsocketcan_interface_plugin.so
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/lib/pkgconfig/socketcan_interface.pc
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/lib/socketcan_interface/socketcan_bcm
-Symlinking /home/michael/workspace/TRI_catkin_ws/devel/lib/socketcan_interface/socketcan_dump

@@ -4,7 +4,7 @@ ros_canopen/socketcan_bridge
 /home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/share/socketcan_bridge/cmake/socketcan_bridgeConfig-version.cmake /home/michael/workspace/TRI_catkin_ws/devel/share/socketcan_bridge/cmake/socketcan_bridgeConfig-version.cmake
 /home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/libtopic_to_socketcan.so /home/michael/workspace/TRI_catkin_ws/devel/lib/libtopic_to_socketcan.so
 /home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/libsocketcan_to_topic.so /home/michael/workspace/TRI_catkin_ws/devel/lib/libsocketcan_to_topic.so
+/home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/pkgconfig/socketcan_bridge.pc /home/michael/workspace/TRI_catkin_ws/devel/lib/pkgconfig/socketcan_bridge.pc
 /home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/socketcan_bridge/socketcan_bridge_node /home/michael/workspace/TRI_catkin_ws/devel/lib/socketcan_bridge/socketcan_bridge_node
 /home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/socketcan_bridge/socketcan_to_topic_node /home/michael/workspace/TRI_catkin_ws/devel/lib/socketcan_bridge/socketcan_to_topic_node
 /home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/socketcan_bridge/topic_to_socketcan_node /home/michael/workspace/TRI_catkin_ws/devel/lib/socketcan_bridge/topic_to_socketcan_node
-/home/michael/workspace/TRI_catkin_ws/devel/.private/socketcan_bridge/lib/pkgconfig/socketcan_bridge.pc /home/michael/workspace/TRI_catkin_ws/devel/lib/pkgconfig/socketcan_bridge.pc
