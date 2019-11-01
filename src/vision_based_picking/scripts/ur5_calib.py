@@ -6,6 +6,7 @@
     date: 10/31/2019
 """
 
+import os
 import sys
 import time
 import roslib; roslib.load_manifest('ur_driver'); roslib.load_manifest('robotiq_3f_gripper_control')
@@ -74,8 +75,10 @@ class UR5Interface:
         print self.robot.get_current_state()
         print ""
 
-        self.group.set_max_acceleration_scaling_factor(0.5)
-        print "============ Set a max acceleration value of 0.5"
+        self.group.set_max_acceleration_scaling_factor(0.1)
+        self.group.set_max_velocity_scaling_factor(0.1)
+        print "============ Set a max acceleration value of 0.1"
+        print "============ Set a max velocity value of 0.1"
 
     def check_joint_limits(self):
         """ function to check that the urdf loaded is specifying
@@ -126,6 +129,31 @@ class UR5Interface:
         robot_goal_state.joint_state.position = plan.joint_trajectory.points[-1].positions
         self.goal_state_publisher.publish(robot_goal_state)
 
+def sample_led():
+	# kick of the service package
+	os.system("rosrun vision_based_picking FindRobotiqLedCam.py &")
+        time.sleep(INTER_COMMAND_DELAY)
+
+        resp = camera_service('Start', 1)
+        time.sleep(INTER_COMMAND_DELAY)
+
+        resp = camera_service('Get', 1)
+        time.sleep(INTER_COMMAND_DELAY)
+
+        camera_service('Shutdown', 1)
+        return np.array([[resp.x, resp.y, resp.z]])
+
+def solve_transform(P1, P2, P3):
+    x_hat_C_F = (P2-P1)/np.linalg.norm(P2-P1)
+    temp_vec = np.cross((P3-P1), x_hat_C_F)
+    y_hat_C_F = temp_vec/np.linalg.norm(temp_vec)
+    z_hat_C_F = np.cross(x_hat_C_F, y_hat_C_F)
+    T = np.eye(4)
+    T[:3,0] = x_hat_C_F
+    T[:3,1] = y_hat_C_F
+    T[:3,2] = z_hat_C_F
+    T[:3,3] = P1
+    return T
             
 
 def test_move():
@@ -153,60 +181,57 @@ def test_move():
         current_pose = ur5.get_pose()
         print "============ Current pose: %s" % current_pose
         
-        #ur5.goto_home_pose()
 
-        # go to P2
+        ### go to P1
+        ur5.goto_home_pose()
+
+        ### sampling P1
+        P1 = sample_led()
+
+        ### go to P2
         P2_pose = ur5.get_pose()
         P2_pose.position.x += 0.1
         ur5.goto_pose_target(P2_pose)
 
-        # go to P3
+        ### sampling P2
+        P2 = sample_led()
+
+        ### go to P3
         P3_pose = ur5.get_pose()
         P3_pose.position.z += 0.1
         ur5.goto_pose_target(P3_pose)
 
+        ### sampling P3
+        P3 = sample_led()
 
+        print("P1: %s, \nP2: %s, \nP3: %s" % (P1, P2 ,P3))
+        # Get the transform from Camera to calibration coordinates F
+        T_C_F = solve_transform(P1, P2, P3)
+        
+        # Transform from robot end effector to F
+        T_F_6 = np.eye(4)
+        T_F_6[:3,3] = np.array([0.0, 0.0375, -0.0115])
 
-        ### sampling P1
-        #resp = camera_service('Start', 1)
-        #time.sleep(INTER_COMMAND_DELAY)
+        T_C_6 = T_C_F.dot(T_F_6)
+        T_C_6 = T_C_F.dot(T_F_6)
 
-        #resp = camera_service('Get', 1)
-        #time.sleep(INTER_COMMAND_DELAY)
+        T_O_6 = np.eye(4)
+        T_O_6[:3,3] = np.array([-0.15,0.35,0.25])
 
-        #camera_service('Shutdown', 1)
-    #   resp = CalibrateResponse(0,0,0)
-    #   P1 = np.array([[resp.x, resp.y, resp.z]])
+        T_C_O = T_C_6.dot(np.linalg.inv(T_O_6))
+        
+        np.save('T_R_C.npy', T_C_O)
 
-    #   ### sampling P2
-    #   #camera_service('Start', 1)
-    #   #time.sleep(INTER_COMMAND_DELAY)
-
-    #   #resp = camera_service('Get', 1)
-    #   #time.sleep(INTER_COMMAND_DELAY)
-
-    #   #camera_service('Shutdown', 1)
-    #   P2 = np.array([[resp.x, resp.y, resp.z]])
-
-    #   ### sampling P3
-    #   #camera_service('Start', 1)
-    #   #time.sleep(INTER_COMMAND_DELAY)
-
-    #   #resp = camera_service('Get', 1)
-    #   #time.sleep(INTER_COMMAND_DELAY)
-
-    #   #camera_service('Shutdown', 1)
-    #   P3 = np.array([[resp.x, resp.y, resp.z]])
 
         #current_pose = group.get_current_pose().pose
         #print "============ Current pose: %s" % current_pose
 
         # Initialize robotiq publishers
-        gripper_pub = rospy.Publisher('Robotiq2FGripperRobotOutput', outputMsg.Robotiq2FGripper_robot_output) 
-        command = outputMsg.Robotiq2FGripper_robot_output()
+        #gripper_pub = rospy.Publisher('Robotiq2FGripperRobotOutput', outputMsg.Robotiq2FGripper_robot_output) 
+        #command = outputMsg.Robotiq2FGripper_robot_output()
         # command to open gripper
-        command.rPR = 0
-        grippe_pub.publish(command)
+        #command.rPR = 0
+        #grippe_pub.publish(command)
 
     except KeyboardInterrupt:
         rospy.signal_shutdown("KeyboardInterrupt")
@@ -214,3 +239,11 @@ def test_move():
 
 if __name__ == '__main__': 
     test_move()
+    #P1 = np.array([[0.4, 0.4, 0.0]])
+    #P2 = np.array([[0.4, -0.4, 0.0]])
+    #P3 = np.array([[0.0, 0.0, 1.0]])
+    #T = solve_transform(P1,P2,P3)
+    #np.save('T_R_C.npy', T)
+
+    T = np.load('T_R_C.npy')
+    print(T)

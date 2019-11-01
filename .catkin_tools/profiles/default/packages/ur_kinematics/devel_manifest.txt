@@ -1,12 +1,12 @@
 universal_robot/ur_kinematics
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/cmake.lock /home/bdml/mlws/TRI_catkin_ws/devel/./cmake.lock
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig-version.cmake /home/bdml/mlws/TRI_catkin_ws/devel/share/ur_kinematics/cmake/ur_kinematicsConfig-version.cmake
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake /home/bdml/mlws/TRI_catkin_ws/devel/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur3_moveit_plugin.so /home/bdml/mlws/TRI_catkin_ws/devel/lib/libur3_moveit_plugin.so
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur3_kin.so /home/bdml/mlws/TRI_catkin_ws/devel/lib/libur3_kin.so
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur10_kin.so /home/bdml/mlws/TRI_catkin_ws/devel/lib/libur10_kin.so
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur5_kin.so /home/bdml/mlws/TRI_catkin_ws/devel/lib/libur5_kin.so
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur10_moveit_plugin.so /home/bdml/mlws/TRI_catkin_ws/devel/lib/libur10_moveit_plugin.so
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur5_moveit_plugin.so /home/bdml/mlws/TRI_catkin_ws/devel/lib/libur5_moveit_plugin.so
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/python2.7/dist-packages/ur_kinematics/__init__.py /home/bdml/mlws/TRI_catkin_ws/devel/lib/python2.7/dist-packages/ur_kinematics/__init__.py
-/home/bdml/mlws/TRI_catkin_ws/devel/.private/ur_kinematics/lib/pkgconfig/ur_kinematics.pc /home/bdml/mlws/TRI_catkin_ws/devel/lib/pkgconfig/ur_kinematics.pc
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/cmake.lock /home/bdml/TRI_catkin_ws/devel/./cmake.lock
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake /home/bdml/TRI_catkin_ws/devel/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig-version.cmake /home/bdml/TRI_catkin_ws/devel/share/ur_kinematics/cmake/ur_kinematicsConfig-version.cmake
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur3_kin.so /home/bdml/TRI_catkin_ws/devel/lib/libur3_kin.so
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur10_kin.so /home/bdml/TRI_catkin_ws/devel/lib/libur10_kin.so
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur3_moveit_plugin.so /home/bdml/TRI_catkin_ws/devel/lib/libur3_moveit_plugin.so
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur5_kin.so /home/bdml/TRI_catkin_ws/devel/lib/libur5_kin.so
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur5_moveit_plugin.so /home/bdml/TRI_catkin_ws/devel/lib/libur5_moveit_plugin.so
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/libur10_moveit_plugin.so /home/bdml/TRI_catkin_ws/devel/lib/libur10_moveit_plugin.so
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/python2.7/dist-packages/ur_kinematics/__init__.py /home/bdml/TRI_catkin_ws/devel/lib/python2.7/dist-packages/ur_kinematics/__init__.py
+/home/bdml/TRI_catkin_ws/devel/.private/ur_kinematics/lib/pkgconfig/ur_kinematics.pc /home/bdml/TRI_catkin_ws/devel/lib/pkgconfig/ur_kinematics.pc
