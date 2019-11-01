@@ -14,6 +14,7 @@ things michael had to install:
 - catkin_make
 - rosdep install --from-paths src/ --ignore-src --rosdistro indigo
 - sudo apt-get install ros-melodic-gazebo-ros-control ros-melodic-gazebo-ros-pkgs
+- sudo apt-get install ros-melodic-socketcan-interface
 
 
 workflow with hardware:
