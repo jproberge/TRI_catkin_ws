@@ -1,5 +1,0 @@
-universal_robot/ur_e_gazebo
-/home/bdml/TRI_catkin_ws/devel/.private/ur_e_gazebo/cmake.lock /home/bdml/TRI_catkin_ws/devel/./cmake.lock
-/home/bdml/TRI_catkin_ws/devel/.private/ur_e_gazebo/share/ur_e_gazebo/cmake/ur_e_gazeboConfig.cmake /home/bdml/TRI_catkin_ws/devel/share/ur_e_gazebo/cmake/ur_e_gazeboConfig.cmake
-/home/bdml/TRI_catkin_ws/devel/.private/ur_e_gazebo/share/ur_e_gazebo/cmake/ur_e_gazeboConfig-version.cmake /home/bdml/TRI_catkin_ws/devel/share/ur_e_gazebo/cmake/ur_e_gazeboConfig-version.cmake
-/home/bdml/TRI_catkin_ws/devel/.private/ur_e_gazebo/lib/pkgconfig/ur_e_gazebo.pc /home/bdml/TRI_catkin_ws/devel/lib/pkgconfig/ur_e_gazebo.pc

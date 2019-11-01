@@ -1,5 +1,0 @@
-universal_robot/ur10_e_moveit_config
-/home/bdml/TRI_catkin_ws/devel/.private/ur10_e_moveit_config/cmake.lock /home/bdml/TRI_catkin_ws/devel/./cmake.lock
-/home/bdml/TRI_catkin_ws/devel/.private/ur10_e_moveit_config/share/ur10_e_moveit_config/cmake/ur10_e_moveit_configConfig-version.cmake /home/bdml/TRI_catkin_ws/devel/share/ur10_e_moveit_config/cmake/ur10_e_moveit_configConfig-version.cmake
-/home/bdml/TRI_catkin_ws/devel/.private/ur10_e_moveit_config/share/ur10_e_moveit_config/cmake/ur10_e_moveit_configConfig.cmake /home/bdml/TRI_catkin_ws/devel/share/ur10_e_moveit_config/cmake/ur10_e_moveit_configConfig.cmake
-/home/bdml/TRI_catkin_ws/devel/.private/ur10_e_moveit_config/lib/pkgconfig/ur10_e_moveit_config.pc /home/bdml/TRI_catkin_ws/devel/lib/pkgconfig/ur10_e_moveit_config.pc
