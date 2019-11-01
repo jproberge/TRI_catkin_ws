@@ -9,10 +9,9 @@ BOWL_COLOR = np.array([0.025, 0.16, 0.75])
 # 1. Only the bowl is in the scene.
 # 2. We know the bowl's color and its somewhat uniform
 
-def get_bowl_pcd(filepath):
-    pcd = o3d.io.read_point_cloud(filepath)
+def get_bowl_pcd(filepath1, filepath2):
 
-    pcd_filtered = filter_pc(pcd, 0.003, [15, 0.01], [30, 0.015])
+    pcd_filtered = get_combined_pcd(filepath1, filepath2)
 
     # Filter for the object points
     # get the point cloud colors as numpy array
@@ -60,6 +59,14 @@ def get_bowl_pcd(filepath):
 
     return final_pcd
 
+
+def get_combined_pcd(fp1, fp2):
+    pcd1 = o3d.io.read_point_cloud(fp1)
+    pcd2 = o3d.io.read_point_cloud(fp2)
+
+    source = filter_pc(pcd2, 0.003, [15, 0.01], [30, 0.015])
+    target = filter_pc(pcd1, 0.003, [15, 0.01], [30, 0.015])
+    pcd_filtered = filter_pc(pcd, 0.003, [15, 0.01], [30, 0.015])
 
 
 def mask_pcd(pcd, mask):
