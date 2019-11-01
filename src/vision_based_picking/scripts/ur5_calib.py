@@ -16,7 +16,7 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output  as outputMsg
-from vision_based_picking.srv import Calibrate, CalibrateResponse
+from vision_based_picking.srv import Calibrate, CalibrateResponse, Acquire, AcquireResponse
 
 import numpy as np
 
@@ -164,6 +164,11 @@ def test_move():
         rospy.init_node("test_move", anonymous=True, disable_signals=True)
 
         camera_service = rospy.ServiceProxy('calibrate', Calibrate)
+
+        pcd_service = rospy.ServiceProxy('acquire', Acquire)
+
+        resp = pcd_service('bowl_pcd.pcd')
+        print("Done")
 
         #robot = moveit_commander.RobotCommander()
         #scene = moveit_commander.PlanningSceneInterface()
