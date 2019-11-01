@@ -55,8 +55,11 @@ def get_bowl_pcd(filepath):
     final_pcd = mask_pcd(pcd_region, in_closest_cluster)
 
     # create new point cloud
-    o3d.io.write_point_cloud("segmented_bowl.pcd", final_pcd)
-    o3d.visualization.draw_geometries([final_pcd])
+    o3d.io.write_point_cloud("data/segmented_bowl.pcd", final_pcd)
+    #o3d.visualization.draw_geometries([final_pcd])
+
+    return final_pcd
+
 
 
 def mask_pcd(pcd, mask):
