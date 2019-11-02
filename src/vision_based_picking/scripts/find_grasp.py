@@ -13,7 +13,10 @@ def draw_registration_result(source, target, transformation):
     o3d.visualization.draw_geometries([source_temp, target_temp])
 
 if __name__ == "__main__":
-    T_O_C = np.load('T_O_C.npy')
+    #T_O_C = np.load('T_O_C.npy')
+
+    T_O_C = np.genfromtxt('../../../CalibrationMatrices/O_T_C1.csv', delimiter=',')[:,:4]
+    print(T_O_C)
 
     source_pcd = get_bowl_pcd("data/Whole_Scene_Camera1_Bowl.pcd", "data/Whole_Scene_Camera2_Bowl.pcd")
     target_pcd = o3d.io.read_point_cloud("data/bowl_model.pcd")
