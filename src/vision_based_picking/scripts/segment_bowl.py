@@ -33,16 +33,17 @@ def get_bowl_pcd(filepath1, filepath2):
 
     # get the centroid of the points
     pcd_centroid = np.mean(pcd_points_filtered, axis=0)
-    print(pcd_centroid)
 
     pcd_region = pcd_spatial_crop(pcd_filtered, pcd_centroid, 0.3)
+    #o3d.visualization.draw_geometries([pcd_region])
 
-    n_cluster = 6
+    n_cluster = 2
     centers, labels = kmeans_color(pcd_region, n_cluster)
     color = np.random.rand(n_cluster,3)
     kmeans_pcd = o3d.geometry.PointCloud()
     kmeans_pcd.colors = o3d.utility.Vector3dVector(color[labels])
     kmeans_pcd.points = pcd_region.points
+    #o3d.visualization.draw_geometries([kmeans_pcd])
 
     # find the cluster closest to the color we want (id the bowl)
     color_centers = centers[:,3:]
@@ -63,11 +64,33 @@ def get_bowl_pcd(filepath1, filepath2):
 def get_combined_pcd(fp1, fp2):
     pcd1 = o3d.io.read_point_cloud(fp1)
     pcd2 = o3d.io.read_point_cloud(fp2)
+    #o3d.visualization.draw_geometries([pcd1])
+    #o3d.visualization.draw_geometries([pcd2])
 
     source = filter_pc(pcd2, 0.003, [15, 0.01], [30, 0.015])
     target = filter_pc(pcd1, 0.003, [15, 0.01], [30, 0.015])
-    pcd_filtered = filter_pc(pcd, 0.003, [15, 0.01], [30, 0.015])
+    trans_init = np.asarray([[.23183,0.543548,-0.806728,0.80269],
+                              [-0.514451,0.772362,0.372554,-0.37719],
+                              [0.825587,0.328653,0.458686,0.513103], [0.0, 0.0, 0.0, 1.0]])
 
+    print("Initial alignment")
+    evaluation = o3d.registration.evaluate_registration(source, target, 0.01, trans_init)
+    print(evaluation)
+
+    print("Apply point-to-point ICP")
+    reg_p2p = o3d.registration.registration_icp(
+        source, target, 0.1, trans_init,
+        o3d.registration.TransformationEstimationPointToPoint())
+    print(reg_p2p)
+    print("Transformation is:")
+    print(reg_p2p.transformation)
+    print("")
+    #draw_registration_result(source, target, reg_p2p.transformation)
+    Merged_pcl = o3d.geometry.PointCloud.transform(source,reg_p2p.transformation)
+    #o3d.visualization.draw_geometries([Merged_pcl+target])
+    Merged_pcl = Merged_pcl+target
+    Merged_pcl = filter_pc(Merged_pcl, 0.003, [15, 0.01], [30, 0.015])
+    return Merged_pcl
 
 def mask_pcd(pcd, mask):
     """
@@ -122,7 +145,8 @@ def kmeans_color(pcd, n_clusters):
     pcd_pts = np.asarray(pcd.points)
     pcd_colors = np.asarray(pcd.colors)
     kmeans = KMeans(n_clusters=n_clusters)
-    kmeans.fit(np.hstack([pcd_pts*5.0,pcd_colors]))
+    kmeans.fit(np.hstack([2.0*pcd_pts,np.subtract(pcd_colors, BOWL_COLOR)]))
+    #kmeans.fit(pcd_colors)
     return kmeans.cluster_centers_, kmeans.labels_
 
 
@@ -138,4 +162,4 @@ def filter_pc(cl, voxel_size, sor_params=None, ror_params=None):
 
 
 if __name__ == "__main__":
-    get_bowl_pcd("Whole_Scene_Camera1_Bowl.pcd")
+    get_bowl_pcd("data/Whole_Scene_Camera1_Bowl.pcd", "data/Whole_Scene_Camera2_Bowl.pcd")

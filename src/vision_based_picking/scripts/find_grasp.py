@@ -13,9 +13,9 @@ def draw_registration_result(source, target, transformation):
     o3d.visualization.draw_geometries([source_temp, target_temp])
 
 if __name__ == "__main__":
-    T_R_C = np.load('T_R_C.npy')
+    T_O_C = np.load('T_O_C.npy')
 
-    source_pcd = get_bowl_pcd("data/Whole_Scene_Camera1_Bowl.pcd")
+    source_pcd = get_bowl_pcd("data/Whole_Scene_Camera1_Bowl.pcd", "data/Whole_Scene_Camera2_Bowl.pcd")
     target_pcd = o3d.io.read_point_cloud("data/bowl_model.pcd")
 
     # find their centroid distances
@@ -47,3 +47,10 @@ if __name__ == "__main__":
     print(reg_p2l.transformation)
     print("")
     draw_registration_result(source_pcd, target_pcd, reg_p2l.transformation)
+
+    T_C_A = reg_p2l.transformation
+
+    # we want to find now T_O_A
+    T_O_A = T_O_C.dot(T_C_A) 
+
+    print("Object pose in robot frame is:\n%s" % T_O_A)
