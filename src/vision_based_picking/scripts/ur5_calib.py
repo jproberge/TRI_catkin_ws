@@ -32,6 +32,9 @@ class UR5Interface:
     joint_names = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint',
                    'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
 
+    joint_values_home = [1.6846278801716934, -1.7635897565294396, 2.2231668882372757, 
+                            -2.0300881697515987, -1.5701774617799797, 1.683634382585456]
+
     def __init__(self):
         self.robot = moveit_commander.RobotCommander()
         self.scene = moveit_commander.PlanningSceneInterface()
@@ -44,16 +47,6 @@ class UR5Interface:
         self.goal_state_publisher = rospy.Publisher('/rviz/moveit/update_custom_goal_state',
                                                         moveit_msgs.msg.RobotState,
                                                         queue_size=20)
-
-        # hard coded home position
-        self.pose_home = geometry_msgs.msg.Pose()
-        self.pose_home.orientation.x = 0.0
-        self.pose_home.orientation.y = 0.7071055
-        self.pose_home.orientation.z = 0.0
-        self.pose_home.orientation.w = 0.7071055
-        self.pose_home.position.x = -0.15
-        self.pose_home.position.y = 0.35
-        self.pose_home.position.z = 0.25
 
         ## Getting Basic Information
         ## ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,22 +88,37 @@ class UR5Interface:
         """ get robot end effector pose """
         return self.group.get_current_pose().pose
 
+    def get_joint_values(self):
+        """ get robot joint values """
+        return self.group.get_current_joint_values()
+
     def goto_home_pose(self):
         """ go to robot end effector home pose """
-        self.goto_pose_target(self.pose_home)
+        self.goto_joint_target(self.joint_values_home)
 
     def goto_pose_target(self, pose):
         """ go to robot end effector pose target """
         self.group.set_pose_target(pose)
         # simulate in rviz then ask user for feedback
         plan = self.group.plan()
-        #self.display_trajectory(plan)
+        self.display_trajectory(plan)
         print("============ Press `Enter` to execute the movement ...")
         raw_input()
         self.group.execute(plan, wait=True)
         self.group.stop()
         self.group.clear_pose_targets()
 
+    def goto_joint_target(self, joint_vals):
+        """ go to robot end effector joint target """
+        self.group.set_joint_value_target(joint_vals)
+        # simulate in rviz then ask user for feedback
+        plan = self.group.plan()
+        self.display_trajectory(plan)
+        print("============ Press `Enter` to execute the movement ...")
+        raw_input()
+        self.group.execute(plan, wait=True)
+        self.group.stop()
+        self.group.clear_pose_targets()
 
     def display_trajectory(self, plan):
         """ displays planned trajectory in rviz """
@@ -155,6 +163,22 @@ def solve_transform(P1, P2, P3):
     T[:3,3] = P1
     return T
             
+
+def test_move_home():
+        moveit_commander.roscpp_initialize(sys.argv)
+
+        rospy.init_node("test_move", anonymous=True, disable_signals=True)
+
+        ur5 = UR5Interface()
+
+        # MoveIt! works well if joint limits are smaller (within -pi, pi)
+        if not ur5.check_joint_limits():
+            raise Exception('Bad joint limits! try running roslaunch with option "limited:=true"')
+
+        ### go to P1
+        ur5.goto_home_pose()
+        print(ur5.get_joint_values())
+
 
 def test_move():
     global client, gripper_pub, camera_service
@@ -243,7 +267,7 @@ def test_move():
         raise
 
 if __name__ == '__main__': 
-    test_move()
+    test_move_home()
     #P1 = np.array([[0.4, 0.4, 0.0]])
     #P2 = np.array([[0.4, -0.4, 0.0]])
     #P3 = np.array([[0.0, 0.0, 1.0]])
