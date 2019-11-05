@@ -1,1 +1,1 @@
-roslaunch realsense2_camera rs_multiple_devices.launch serial_no_camera1:=934222070335 serial_no_camera2:=934222071824 camera_filters:=pointcloud
+roslaunch realsense2_camera rs_multiple_devices.launch serial_no_camera1:=934222070335 serial_no_camera2:=934222071824 camera_filters:=pointcloud initial_reset:=true

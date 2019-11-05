@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 import open3d as o3d
 from sklearn.cluster import KMeans
 
@@ -11,7 +12,8 @@ BOWL_COLOR = np.array([0.025, 0.16, 0.75])
 
 def get_bowl_pcd(filepath1, filepath2):
 
-    pcd_filtered = get_combined_pcd(filepath1, filepath2)
+    #pcd_filtered = get_combined_pcd(filepath1, filepath2)
+    pcd_filtered = o3d.io.read_point_cloud(filepath1)
 
     # Filter for the object points
     # get the point cloud colors as numpy array
@@ -34,7 +36,7 @@ def get_bowl_pcd(filepath1, filepath2):
     # get the centroid of the points
     pcd_centroid = np.mean(pcd_points_filtered, axis=0)
 
-    pcd_region = pcd_spatial_crop(pcd_filtered, pcd_centroid, 0.3)
+    pcd_region = pcd_spatial_crop(pcd_filtered, pcd_centroid, 0.3*np.ones(3))
     #o3d.visualization.draw_geometries([pcd_region])
 
     n_cluster = 2
@@ -69,9 +71,16 @@ def get_combined_pcd(fp1, fp2):
 
     source = filter_pc(pcd2, 0.003, [15, 0.01], [30, 0.015])
     target = filter_pc(pcd1, 0.003, [15, 0.01], [30, 0.015])
-    trans_init = np.asarray([[.23183,0.543548,-0.806728,0.80269],
-                              [-0.514451,0.772362,0.372554,-0.37719],
-                              [0.825587,0.328653,0.458686,0.513103], [0.0, 0.0, 0.0, 1.0]])
+    #trans_init = np.asarray([[.23183,0.543548,-0.806728,0.80269],
+    #                          [-0.514451,0.772362,0.372554,-0.37719],
+    #                          [0.825587,0.328653,0.458686,0.513103], [0.0, 0.0, 0.0, 1.0]])
+
+    o3d.visualization.draw_geometries([source])
+    o3d.visualization.draw_geometries([target])
+
+    trans_init = np.load('T_C2_C1.npy')
+
+    draw_registration_result(source, target, trans_init)
 
     print("Initial alignment")
     evaluation = o3d.registration.evaluate_registration(source, target, 0.01, trans_init)
@@ -117,18 +126,18 @@ def pcd_spatial_crop(pcd, centroid, box_width):
     Input:  
             pcd: open3d PointCloud object
             centroid: 3d vector of center of object
-            box_width: width of the clipping
+            box_width: 3d vector of clipping width in x, y and z
     Output:
             new_pcd: open3d PointCloud object filtered
     """
     pcd_pts_arr = np.asarray(pcd.points)
     pcd_colors_arr = np.asarray(pcd.colors)
-    dist_mask = np.bitwise_and(pcd_pts_arr[:,2] > (centroid[2] - box_width/2.0), \
-                              pcd_pts_arr[:,2] < (centroid[2] + box_width/2.0))
-    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,1] > (centroid[1] - box_width/2.0))
-    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,1] < (centroid[1] + box_width/2.0))
-    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,0] > (centroid[0] - box_width/2.0))
-    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,0] < (centroid[0] + box_width/2.0))
+    dist_mask = np.bitwise_and(pcd_pts_arr[:,2] > (centroid[2] - box_width[2]/2.0), \
+                              pcd_pts_arr[:,2] < (centroid[2] + box_width[2]/2.0))
+    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,1] > (centroid[1] - box_width[1]/2.0))
+    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,1] < (centroid[1] + box_width[1]/2.0))
+    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,0] > (centroid[0] - box_width[0]/2.0))
+    dist_mask = np.bitwise_and(dist_mask, pcd_pts_arr[:,0] < (centroid[0] + box_width[0]/2.0))
     return mask_pcd(pcd, dist_mask)
     
 def kmeans_color(pcd, n_clusters):
@@ -159,6 +168,14 @@ def filter_pc(cl, voxel_size, sor_params=None, ror_params=None):
     if ror_params != None:
         cl, ind = cl.remove_radius_outlier(ror_params[0], ror_params[1])
     return cl
+
+def draw_registration_result(source, target, transformation):
+    source_temp = copy.deepcopy(source)
+    target_temp = copy.deepcopy(target)
+    source_temp.paint_uniform_color([1, 0.706, 0])
+    target_temp.paint_uniform_color([0, 0.651, 0.929])
+    source_temp.transform(transformation)
+    o3d.visualization.draw_geometries([source_temp, target_temp])
 
 
 if __name__ == "__main__":

@@ -120,6 +120,10 @@ class UR5Interface:
         self.group.stop()
         self.group.clear_pose_targets()
 
+    def stop(self):
+        self.group.stop()
+        self.group.clear_pose_targets()
+
     def display_trajectory(self, plan):
         """ displays planned trajectory in rviz """
         # Copy class variables to local variables to make the web tutorials more clear.
@@ -137,19 +141,19 @@ class UR5Interface:
         robot_goal_state.joint_state.position = plan.joint_trajectory.points[-1].positions
         self.goal_state_publisher.publish(robot_goal_state)
 
-def sample_led():
+def sample_led(cam_id):
 	# kick of the service package
-	os.system("rosrun vision_based_picking FindRobotiqLedCam.py &")
-        time.sleep(INTER_COMMAND_DELAY)
+    os.system("rosrun vision_based_picking FindRobotiqLedCam.py &")
+    time.sleep(INTER_COMMAND_DELAY)
 
-        resp = camera_service('Start', 1)
-        time.sleep(INTER_COMMAND_DELAY)
+    resp = camera_service('Start', cam_id)
+    time.sleep(INTER_COMMAND_DELAY)
 
-        resp = camera_service('Get', 1)
-        time.sleep(INTER_COMMAND_DELAY)
+    resp = camera_service('Get', cam_id)
+    time.sleep(INTER_COMMAND_DELAY)
 
-        camera_service('Shutdown', 1)
-        return np.array([[resp.x, resp.y, resp.z]])
+    camera_service('Shutdown', cam_id)
+    return np.array([[resp.x, resp.y, resp.z]])
 
 def solve_transform(P1, P2, P3):
     x_hat_C_F = (P2-P1)/np.linalg.norm(P2-P1)
@@ -191,15 +195,9 @@ def test_move():
 
         pcd_service = rospy.ServiceProxy('acquire', Acquire)
 
-        resp = pcd_service('bowl_pcd.pcd')
-        print("Done")
+        #resp = pcd_service('bowl_pcd.pcd')
+        #print("Done")
 
-        #robot = moveit_commander.RobotCommander()
-        #scene = moveit_commander.PlanningSceneInterface()
-        #group = moveit_commander.MoveGroupCommander("manipulator")
-      #	display_trajectory_publisher = rospy.Publisher('/move_group/display_planned_path',
-      #                                                   moveit_msgs.msg.DisplayTrajectory,
-      #                                                   queue_size=20)
         ur5 = UR5Interface()
 
         # MoveIt! works well if joint limits are smaller (within -pi, pi)
@@ -215,7 +213,8 @@ def test_move():
         ur5.goto_home_pose()
 
         ### sampling P1
-        P1 = sample_led()
+        P1_C1 = sample_led(1)
+        P1_C2 = sample_led(2)
 
         ### go to P2
         P2_pose = ur5.get_pose()
@@ -223,7 +222,8 @@ def test_move():
         ur5.goto_pose_target(P2_pose)
 
         ### sampling P2
-        P2 = sample_led()
+        P2_C1 = sample_led(1)
+        P2_C2 = sample_led(2)
 
         ### go to P3
         P3_pose = ur5.get_pose()
@@ -231,26 +231,37 @@ def test_move():
         ur5.goto_pose_target(P3_pose)
 
         ### sampling P3
-        P3 = sample_led()
+        P3_C1 = sample_led(1)
+        P3_C2 = sample_led(2)
 
-        print("P1: %s, \nP2: %s, \nP3: %s" % (P1, P2 ,P3))
+        print("Camera1 P1: %s, \nP2: %s, \nP3: %s" % (P1_C1, P2_C1 ,P3_C1))
         # Get the transform from Camera to calibration coordinates F
-        T_C_F = solve_transform(P1, P2, P3)
+        T_C1_F = solve_transform(P1_C1, P2_C1, P3_C1)
+
+        print("Camera2 P1: %s, \nP2: %s, \nP3: %s" % (P1_C2, P2_C2 ,P3_C2))
+        # Get the transform from Camera to calibration coordinates F
+        T_C2_F = solve_transform(P1_C2, P2_C2, P3_C2)
         
         # Transform from robot end effector to F
         T_F_6 = np.eye(4)
         T_F_6[:3,3] = np.array([0.0, 0.0375, -0.0115])
 
-        T_C_6 = T_C_F.dot(T_F_6)
-        T_C_6 = T_C_F.dot(T_F_6)
-
         T_O_6 = np.eye(4)
         T_O_6[:3,3] = np.array([-0.15,0.35,0.25])
 
-        T_C_O = T_C_6.dot(np.linalg.inv(T_O_6))
-        
-        np.save('T_R_C.npy', T_C_O)
 
+        T_C1_6 = T_C1_F.dot(T_F_6)
+        T_C1_O = T_C1_6.dot(np.linalg.inv(T_O_6))
+        T_O_C1 = np.linalg.inv(T_C1_O)
+        path = os.path.join(os.path.dirname(__file__)) + "/config/"
+        np.save(path + 'T_O_C1.npy', T_O_C1)
+
+        T_C2_6 = T_C2_F.dot(T_F_6)
+        T_C2_O = T_C2_6.dot(np.linalg.inv(T_O_6))
+        T_O_C2 = np.linalg.inv(T_C1_O)
+        np.save(path + 'T_O_C2.npy', T_O_C2)
+
+        np.save(path + 'T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
 
         #current_pose = group.get_current_pose().pose
         #print "============ Current pose: %s" % current_pose
@@ -266,13 +277,36 @@ def test_move():
         rospy.signal_shutdown("KeyboardInterrupt")
         raise
 
-if __name__ == '__main__': 
-    test_move_home()
-    #P1 = np.array([[0.4, 0.4, 0.0]])
-    #P2 = np.array([[0.4, -0.4, 0.0]])
-    #P3 = np.array([[0.0, 0.0, 1.0]])
-    #T = solve_transform(P1,P2,P3)
-    #np.save('T_R_C.npy', T)
 
-    T = np.load('T_R_C.npy')
-    print(T)
+# Change this macro to True if needed to re-calibrate
+PERFORM_CALIBRATION = True
+
+if __name__ == '__main__': 
+
+    if PERFORM_CALIBRATION:
+        # uncomment test move to perform a calibration
+        test_move()
+    else:
+        P1 = np.array([ 0.11121763, 0.13853986, 0.80320004])
+        P2 = np.array([ 0.0433853,  0.09843211, 0.85500003])
+        P3 = np.array([ 0.05640479, 0.01420273, 0.81033337])
+
+        T_C_F = solve_transform(P1, P2, P3)
+        
+        # Transform from robot end effector to F
+        T_F_6 = np.eye(4)
+        T_F_6[:3,3] = np.array([0.0, 0.0375, -0.0115])
+
+        T_C_6 = T_C_F.dot(T_F_6)
+
+        T_O_6 = np.eye(4)
+        T_O_6[:3,3] = np.array([-0.15,0.35,0.25])
+
+        T_C_O = T_C_6.dot(np.linalg.inv(T_O_6))
+        
+        np.save('T_O_C1.npy', np.linalg.inv(T_C_O))
+
+    T_O_C1 = np.load('T_O_C1.npy')
+    T_O_C2 = np.load('T_O_C2.npy')
+    np.save('T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
+    print(T_O_C1)
