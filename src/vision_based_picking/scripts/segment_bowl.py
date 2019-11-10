@@ -36,7 +36,7 @@ def get_bowl_pcd(filepath1, filepath2):
     # get the centroid of the points
     pcd_centroid = np.mean(pcd_points_filtered, axis=0)
 
-    pcd_region = pcd_spatial_crop(pcd_filtered, pcd_centroid, 0.3*np.ones(3))
+    pcd_region = pcd_spatial_crop(pcd_filtered, pcd_centroid, 0.2*np.ones(3))
     #o3d.visualization.draw_geometries([pcd_region])
 
     n_cluster = 2

@@ -49,8 +49,8 @@ def pc_msg_gen(pc_pts, frame_id):
     return msg
 
 def sample_scene():
-    #os.system("rosrun vision_based_picking acquire_realsense.py &")
-    #time.sleep(5)
+    os.system("rosrun vision_based_picking acquire_realsense.py &")
+    time.sleep(4)
     
     pcd_service = rospy.ServiceProxy('acquire', Acquire)
 
@@ -58,7 +58,7 @@ def sample_scene():
 
 if __name__ == "__main__":
     try:
-        path = os.path.join(os.path.dirname(__file__)) + "/config/"
+        path = os.path.dirname(os.path.abspath(__file__)) + "/config/"
         T_O_C1 = np.load(path + 'T_O_C1.npy')
         T_O_C2 = np.load(path + 'T_O_C2.npy')
 
@@ -130,7 +130,7 @@ if __name__ == "__main__":
         target_pose = ur5.get_pose()
         target_pose.position.x = T_O_A[0,3]
         target_pose.position.y = T_O_A[1,3]
-        target_pose.position.z = T_O_A[2,3] + 0.2
+        target_pose.position.z = T_O_A[2,3] + 0.3
 
         # MoveIt! works well if joint limits are smaller (within -pi, pi)
         if not ur5.check_joint_limits():

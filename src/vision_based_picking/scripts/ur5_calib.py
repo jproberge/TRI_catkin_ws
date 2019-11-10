@@ -23,7 +23,7 @@ import numpy as np
 
 
 # global definitions
-INTER_COMMAND_DELAY = 8
+INTER_COMMAND_DELAY = 4
 
 
 class UR5Interface:
@@ -253,7 +253,7 @@ def test_move():
         T_C1_6 = T_C1_F.dot(T_F_6)
         T_C1_O = T_C1_6.dot(np.linalg.inv(T_O_6))
         T_O_C1 = np.linalg.inv(T_C1_O)
-        path = os.path.join(os.path.dirname(__file__)) + "/config/"
+        path = os.path.dirname(os.path.abspath(__file__)) + "/config/"
         np.save(path + 'T_O_C1.npy', T_O_C1)
 
         T_C2_6 = T_C2_F.dot(T_F_6)
@@ -306,7 +306,8 @@ if __name__ == '__main__':
         
         np.save('T_O_C1.npy', np.linalg.inv(T_C_O))
 
-    T_O_C1 = np.load('T_O_C1.npy')
-    T_O_C2 = np.load('T_O_C2.npy')
-    np.save('T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
+    path = os.path.join(os.path.dirname(__file__)) + "/config/"
+    T_O_C1 = np.load(path + 'T_O_C1.npy')
+    T_O_C2 = np.load(path + 'T_O_C2.npy')
+    np.save(path + 'T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
     print(T_O_C1)

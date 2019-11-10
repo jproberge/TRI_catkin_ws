@@ -6,32 +6,17 @@
   <!-- By default, we are not in debug mode -->
   <arg name="debug" default="false" />
   
-  <arg name="limited" default="false"/>
+  <arg name="limited" default="true"/>
 
-  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-  <include file="$(find vision_based_picking)/launch/planning_context.launch">
-    <arg name="load_robot_description" value="true"/>
+  <!-- Load the hardware -->
+  <include file="$(find ur_bringup)/launch/ur5_bringup.launch">
+    <arg name="robot_ip" value="172.22.22.3"/>
     <arg name="limited" value="$(arg limited)"/>
   </include>
 
-  <!-- If needed, broadcast static tf for robot root -->
-  
-
-  <!-- We do not have a robot connected, so publish fake joint states -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="/use_gui" value="false"/> 
-    <rosparam param="/source_list">[/move_group/fake_controller_joint_states]</rosparam>
-  </node>
-  
-  <!-- Given the published joint states, publish tf for the robot links -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
-
-  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
-  <include file="$(find ur5_moveit_config)/launch/move_group.launch">
-    <arg name="allow_trajectory_execution" value="true"/>  
-    <arg name="fake_execution" value="true"/>
-    <arg name="info" value="true"/>
-    <arg name="debug" value="$(arg debug)"/>
+  <!-- Load moveit planner-->
+  <include file="$(find ur5_moveit_config)/launch/ur5_moveit_planning_execution.launch">
+    <arg name="limited" value="true"/>
   </include>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
@@ -42,5 +27,12 @@
 
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find ur5_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)"/>
+
+  <!-- Run realsense cameras -->
+  <include file="$(find realsense2_camera)/launch/rs_multiple_devices.launch">
+    <arg name="serial_no_camera1" value="934222070335"/>
+    <arg name="serial_no_camera2" value="934222071824"/>
+    <arg name="camera_filters" value="pointcloud"/>
+  </include>
 
 </launch>
