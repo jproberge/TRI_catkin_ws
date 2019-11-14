@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from segment_bowl import *
-from ur5_calib import UR5Interface
+from ur5_interface import UR5Interface
 import open3d as o3d
 import numpy as np
 import copy
