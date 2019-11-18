@@ -1,8 +1,0 @@
-prefix=/home/bdml/catkin_ws/devel
-
-Name: ur_driver
-Description: Description of ur_driver
-Version: 1.1.9
-Cflags: -I/home/bdml/catkin_ws/devel/include -I/home/bdml/catkin_ws/src/universal_robot/ur_driver/include
-Libs: -L/home/bdml/catkin_ws/devel/lib -lroboticArm -lURcontrolV2
-Requires: dynamic_reconfigure message_runtime

@@ -1,0 +1,38 @@
+<launch>
+
+  <!-- By default, we do not start a database (it can be large) -->
+  <arg name="db" default="false" />
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+  
+  <arg name="limited" default="true"/>
+
+  <!-- Load the hardware -->
+  <include file="$(find ur_bringup)/launch/ur5_bringup.launch">
+    <arg name="robot_ip" value="172.22.22.3"/>
+    <arg name="limited" value="$(arg limited)"/>
+  </include>
+
+  <!-- Load moveit planner-->
+  <include file="$(find ur5_moveit_config)/launch/ur5_moveit_planning_execution.launch">
+    <arg name="limited" value="true"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find ur5_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- If database loading was enabled, start mongodb as well -->
+  <include file="$(find ur5_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)"/>
+
+  <!-- Run realsense cameras -->
+  <include file="$(find realsense2_camera)/launch/rs_multiple_devices.launch">
+    <arg name="serial_no_camera1" value="934222070335"/>
+    <arg name="serial_no_camera2" value="934222071824"/>
+    <arg name="camera_filters" value="pointcloud"/>
+  </include>
+
+</launch>
