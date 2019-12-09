@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <name>dbot</name>
+  <version>0.1.1</version>
+  <description>The depth based object tracking package</description>
+
+  <maintainer email="jan.issac@gmail.com">Jan Issac</maintainer>
+
+  <license>GNU GPL</license>
+
+  <url type="website">https://github.com/bayesian-object-tracking/dbot</url>
+
+  <author email="manuel.wuthrich@gmail.com">Manuel Wuethrich</author>
+  <author email="jan.issac@gmail.com">Jan Issac</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>fl</build_depend>
+  <run_depend>fl</run_depend>
+
+  <export>
+    <!-- <metapackage/> -->
+  </export>
+</package>

@@ -1,0 +1,46 @@
+
+gaussian_filter:
+  # State moving average update rate in [0.0; 1.0]
+  #   1: unfiltered wiggly estimates.
+  #   0: constant
+  moving_average_update_rate: 1.0
+
+  # Specify whether to center the frame of the object
+  center_object_frame:  true 
+
+  unscented_transform:
+    alpha: 1.0
+
+  object_transition:
+    linear_sigma_x: 0.002
+    linear_sigma_y: 0.002
+    linear_sigma_z: 0.002
+    angular_sigma_x: 0.01
+    angular_sigma_y: 0.01
+    angular_sigma_z: 0.01
+    velocity_factor: 0.8
+
+  observation:
+    fg_noise_std: 0.001 #0.001
+
+    # uniform tail arguments
+    tail_weight: 0.1
+    uniform_tail_min: -5000.0
+    uniform_tail_max: 5000.0
+
+    bg_depth: -3.0
+    bg_noise_std: 100.0
+
+  object_color:
+   R: 97
+   G: 117
+   B: 123
+
+# object colors
+gt_color_r: 97
+gt_color_g: 117
+gt_color_b: 123
+belief_color_r: 250
+belief_color_g: 232
+belief_color_b: 184
+

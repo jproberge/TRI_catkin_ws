@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <name>dbot_ros_msgs</name>
+  <version>0.0.0</version>
+  <description>The dbot_ros_msgs package</description>
+
+  <maintainer email="jan.issac@gmail.com">Jan Issac</maintainer>
+
+  <license>GPL</license>
+
+  <url type="website">http://github.com/bayesian-object-tracking/dbot_ros_msgs.git</url>
+
+  <author email="jan.issac@gmail.com">Jan Issac</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+
+  <export>
+    <!-- <metapackage/> -->
+  </export>
+</package>

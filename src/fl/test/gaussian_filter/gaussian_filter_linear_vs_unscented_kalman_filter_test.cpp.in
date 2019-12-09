@@ -1,0 +1,41 @@
+/*
+ * This is part of the fl library, a C++ Bayesian filtering library
+ * (https://github.com/filtering-library)
+ *
+ * Copyright (c) 2015 Max Planck Society,
+ * 				 Autonomous Motion Department,
+ * 			     Institute for Intelligent Systems
+ *
+ * This Source Code Form is subject to the terms of the MIT License (MIT).
+ * A copy of the license can be found in the LICENSE file distributed with this
+ * source code.
+ */
+
+/**
+ * \file gaussian_filter_linear_vs_unscented_kalman_filter_test.hpp
+ * \date July 2015
+ * \author Jan Issac (jan.issac@gmail.com)
+ */
+
+#include <gtest/gtest.h>
+
+#include <fl/util/types.hpp>
+#include "gaussian_filter_linear_vs_unscented_kalman_filter_test.hpp"
+
+typedef ::testing::Types<
+    fl::@Type@<
+        UkfTestConfig<
+            @StateDim@,
+            @InputDim@,
+            @ObsrvDim@,
+            @ModelType@,
+            fl::@TransitionNoiseType@,
+            fl::@SensorNoiseType@
+        >
+    >
+> TestTypes;
+
+INSTANTIATE_TYPED_TEST_CASE_P(
+    GaussianFilterLinearVUkf_@Type@_@StateDim@_@InputDim@_@ObsrvDim@_@ModelType@_@TransitionNoiseType@_@SensorNoiseType@,
+    GaussianFilterLinearVsXTest,
+    TestTypes);

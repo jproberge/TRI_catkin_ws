@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<package>
+  <name>dbot_ros</name>
+  <version>0.1.0</version>
+  <description>The dbot_ros package</description>
+
+  <maintainer email="jan.issac@gmail.com">Jan Issac</maintainer>
+
+  <license>GNU GPL</license>
+
+  <url type="website">https://github.com/bayesian-object-tracking/dbot_ros</url>
+
+  <author email="jan.issac@gmail.com">Jan Issac</author>
+  <author email="manuel.wuthrich@gmail.com">Manuel Wuthrich</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>roslib</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>OpenCV</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>message_filters</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>fl</build_depend>
+  <build_depend>dbot</build_depend>
+  <build_depend>dbot_ros_msgs</build_depend>
+  <build_depend>interactive_markers</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>roslib</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>OpenCV</run_depend>
+  <run_depend>message_filters</run_depend>
+  <run_depend>image_transport</run_depend>
+  <run_depend>fl</run_depend>
+  <run_depend>dbot</run_depend>
+  <run_depend>dbot_ros_msgs</run_depend>
+  <run_depend>interactive_markers</run_depend>
+
+  <export>
+    <!-- <metapackage/> -->
+  </export>
+</package>

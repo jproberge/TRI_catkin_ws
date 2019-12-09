@@ -1,0 +1,20 @@
+<launch>
+  <!-- launch bayesian tracker -->
+  <include file="$(find dbot_ros)/launch/object_tracker_service.launch"/>
+
+  <!-- launch tag tracker -->
+  <include file="$(find apriltag_ros)/launch/continuous_detection.launch">
+    <arg name="camera_name" value="/camera/color"/>
+    <arg name="image_topic" value="image_raw"/>
+    <arg name="camera_frame" value="camera_color_frame"/>
+  </include>
+
+  <!-- Run realsense cameras -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="serial_no" value="934222070335"/>
+    <!--<arg name="camera_filters" value="pointcloud"/> -->
+    <arg name="initial_reset" value="true"/>
+    <arg name="enable_pointcloud" value="true"/>
+  </include>
+
+</launch>
