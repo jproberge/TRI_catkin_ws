@@ -12,12 +12,21 @@ import tf
 import geometry_msgs.msg
 from sensor_msgs.msg import PointCloud2, PointField
 from std_msgs.msg import Header
+from scipy.spatial.transform import Rotation as R
 from dbot_ros_msgs.msg import ObjectState
 
-def get_object_pose_cb(data):
-    print("Got pose")
+curr_pose = None
+got_curr_pose = False
 
-if __name__ == "__main__":
+def get_object_pose_cb(data):
+    global curr_pose
+    global got_curr_pose
+    curr_pose = data.pose.pose
+    got_curr_pose = True
+
+def servo_to_obj():
+    global curr_pose
+    global got_curr_pose
     try:
         path = os.path.dirname(os.path.abspath(__file__)) + "/config/"
         T_O_C1 = np.load(path + 'T_O_C1.npy')
@@ -26,13 +35,31 @@ if __name__ == "__main__":
         rospy.init_node("find_grasp", anonymous=True, disable_signals=True)
         rospy.Subscriber('/object_tracker_service/object_state', ObjectState, get_object_pose_cb)
 
-        # replace this with bayesian tracking transform
-        T_A_C = reg_p2l.transformation
+        ur5 = UR5Interface()
 
+        while (not got_curr_pose):
+            time.sleep(0.1)
+
+        curr_pos = np.zeros(3)
+        curr_pos[0] = curr_pose.position.x
+        curr_pos[1] = curr_pose.position.y
+        curr_pos[2] = curr_pose.position.z
+        
+        curr_rot = np.zeros(4)
+        curr_rot[0] = curr_pose.orientation.x
+        curr_rot[1] = curr_pose.orientation.y
+        curr_rot[2] = curr_pose.orientation.z
+        curr_rot[3] = curr_pose.orientation.w
+
+        T_A_C = np.zeros((4,4))
+        T_A_C[3,3] = 1.0
+        T_A_C[:3,3] = curr_pos
+        T_A_C[:3,:3] = R.from_quat(curr_rot).as_dcm()
+        
+
+        print(T_A_C)
         # we want to find now T_O_A
         T_O_A = T_O_C1.dot(np.linalg.inv(T_A_C))
-
-        ur5 = UR5Interface()
 
         # get gripper rotation
         target_pose = ur5.get_pose()
@@ -44,7 +71,7 @@ if __name__ == "__main__":
         if not ur5.check_joint_limits():
             raise Exception('Bad joint limits! try running roslaunch with option "limited:=true"')
 
-        ur5.goto_pose_target(target_pose)
+        #ur5.goto_pose_target(target_pose)
 
         br = tf.TransformBroadcaster()
 
@@ -67,3 +94,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         ur5.stop()
         print("UR stopped")
+
+if __name__ == "__main__":
+    servo_to_obj()

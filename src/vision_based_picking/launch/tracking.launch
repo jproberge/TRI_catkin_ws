@@ -17,4 +17,23 @@
     <arg name="enable_pointcloud" value="true"/>
   </include>
 
+  <!-- Load the ur5 -->
+  <arg name="limited" default="true"/>
+  <include file="$(find ur_bringup)/launch/ur5_bringup.launch">
+    <arg name="robot_ip" value="172.22.22.3"/>
+    <arg name="limited" value="$(arg limited)"/>
+  </include>
+
+  <!-- Load moveit planner-->
+  <arg name="debug" default="false" />
+  <include file="$(find ur5_moveit_config)/launch/ur5_moveit_planning_execution.launch">
+    <arg name="limited" value="true"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find ur5_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
 </launch>
