@@ -31,8 +31,9 @@ def track_object(object_name):
   curr_obj_pose = None
   print "Waiting for service..."
   rospy.init_node('bridge', disable_signals=True)
-  #rospy.wait_for_service("/object_tracker_service")
+  rospy.wait_for_service("/object_tracker_service")
   rospy.Subscriber('tag_detections', AprilTagDetectionArray, tag_data_cb)
+  print("Found service")
 
   try:
     while (obj_pose_detections < 10):

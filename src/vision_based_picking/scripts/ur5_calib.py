@@ -68,12 +68,12 @@ def test_move_home():
         print(ur5.get_joint_values())
 
 
-def test_move():
+def led_based_calib():
     global client, gripper_pub, camera_service
     try:
         moveit_commander.roscpp_initialize(sys.argv)
 
-        rospy.init_node("test_move", anonymous=True, disable_signals=True)
+        rospy.init_node("led_based_calib", anonymous=True, disable_signals=True)
 
         camera_service = rospy.ServiceProxy('calibrate', Calibrate)
 
@@ -97,8 +97,8 @@ def test_move():
         ur5.goto_home_pose()
 
         ### sampling P1
-        P1_C1 = sample_led(1)
-        P1_C2 = sample_led(2)
+        if CAMERA1_ON: P1_C1 = sample_led(1)
+        if CAMERA2_ON: P1_C2 = sample_led(2)
 
         ### go to P2
         P2_pose = ur5.get_pose()
@@ -106,8 +106,8 @@ def test_move():
         ur5.goto_pose_target(P2_pose)
 
         ### sampling P2
-        P2_C1 = sample_led(1)
-        P2_C2 = sample_led(2)
+        if CAMERA1_ON: P2_C1 = sample_led(1)
+        if CAMERA2_ON: P2_C2 = sample_led(2)
 
         ### go to P3
         P3_pose = ur5.get_pose()
@@ -115,16 +115,18 @@ def test_move():
         ur5.goto_pose_target(P3_pose)
 
         ### sampling P3
-        P3_C1 = sample_led(1)
-        P3_C2 = sample_led(2)
+        if CAMERA1_ON: P3_C1 = sample_led(1)
+        if CAMERA2_ON: P3_C2 = sample_led(2)
 
-        print("Camera1 P1: %s, \nP2: %s, \nP3: %s" % (P1_C1, P2_C1 ,P3_C1))
-        # Get the transform from Camera to calibration coordinates F
-        T_C1_F = solve_transform(P1_C1, P2_C1, P3_C1)
+        if CAMERA1_ON: 
+            print("Camera1 P1: %s, \nP2: %s, \nP3: %s" % (P1_C1, P2_C1 ,P3_C1))
+            # Get the transform from Camera to calibration coordinates F
+            T_C1_F = solve_transform(P1_C1, P2_C1, P3_C1)
 
-        print("Camera2 P1: %s, \nP2: %s, \nP3: %s" % (P1_C2, P2_C2 ,P3_C2))
-        # Get the transform from Camera to calibration coordinates F
-        T_C2_F = solve_transform(P1_C2, P2_C2, P3_C2)
+        if CAMERA2_ON: 
+            print("Camera2 P1: %s, \nP2: %s, \nP3: %s" % (P1_C2, P2_C2 ,P3_C2))
+            # Get the transform from Camera to calibration coordinates F
+            T_C2_F = solve_transform(P1_C2, P2_C2, P3_C2)
         
         # Transform from robot end effector to F
         T_F_6 = np.eye(4)
@@ -134,18 +136,21 @@ def test_move():
         T_O_6[:3,3] = np.array([-0.15,0.35,0.25])
 
 
-        T_C1_6 = T_C1_F.dot(T_F_6)
-        T_C1_O = T_C1_6.dot(np.linalg.inv(T_O_6))
-        T_O_C1 = np.linalg.inv(T_C1_O)
-        path = os.path.dirname(os.path.abspath(__file__)) + "/config/"
-        np.save(path + 'T_O_C1.npy', T_O_C1)
+        if CAMERA1_ON: 
+            T_C1_6 = T_C1_F.dot(T_F_6)
+            T_C1_O = T_C1_6.dot(np.linalg.inv(T_O_6))
+            T_O_C1 = np.linalg.inv(T_C1_O)
+            path = os.path.dirname(os.path.abspath(__file__)) + "/config/"
+            np.save(path + 'T_O_C1.npy', T_O_C1)
 
-        T_C2_6 = T_C2_F.dot(T_F_6)
-        T_C2_O = T_C2_6.dot(np.linalg.inv(T_O_6))
-        T_O_C2 = np.linalg.inv(T_C1_O)
-        np.save(path + 'T_O_C2.npy', T_O_C2)
+        if CAMERA2_ON: 
+            T_C2_6 = T_C2_F.dot(T_F_6)
+            T_C2_O = T_C2_6.dot(np.linalg.inv(T_O_6))
+            T_O_C2 = np.linalg.inv(T_C2_O)
+            np.save(path + 'T_O_C2.npy', T_O_C2)
 
-        np.save(path + 'T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
+        if CAMERA1_ON and CAMERA2_ON: 
+            np.save(path + 'T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
 
         #current_pose = group.get_current_pose().pose
         #print "============ Current pose: %s" % current_pose
@@ -164,12 +169,14 @@ def test_move():
 
 # Change this macro to True if needed to re-calibrate
 PERFORM_CALIBRATION = True
+CAMERA1_ON = True       # Camera 934222070335 
+CAMERA2_ON = False      # Camera 934222071824
 
 if __name__ == '__main__': 
 
     if PERFORM_CALIBRATION:
         # uncomment test move to perform a calibration
-        test_move()
+        led_based_calib()
     else:
         P1 = np.array([ 0.11121763, 0.13853986, 0.80320004])
         P2 = np.array([ 0.0433853,  0.09843211, 0.85500003])
@@ -189,9 +196,3 @@ if __name__ == '__main__':
         T_C_O = T_C_6.dot(np.linalg.inv(T_O_6))
         
         np.save('T_O_C1.npy', np.linalg.inv(T_C_O))
-
-    path = os.path.join(os.path.dirname(__file__)) + "/config/"
-    T_O_C1 = np.load(path + 'T_O_C1.npy')
-    T_O_C2 = np.load(path + 'T_O_C2.npy')
-    np.save(path + 'T_C2_C1.npy', np.linalg.inv(T_O_C2).dot(T_O_C1))
-    print(T_O_C1)

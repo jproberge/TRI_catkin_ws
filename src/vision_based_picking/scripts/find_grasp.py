@@ -61,17 +61,11 @@ def servo_to_obj():
         # we want to find now T_O_A
         T_O_A = T_O_C1.dot(np.linalg.inv(T_A_C))
 
-        # get gripper rotation
-        target_pose = ur5.get_pose()
-        target_pose.position.x = T_O_A[0,3]
-        target_pose.position.y = T_O_A[1,3]
-        target_pose.position.z = T_O_A[2,3] + 0.3
 
         # MoveIt! works well if joint limits are smaller (within -pi, pi)
         if not ur5.check_joint_limits():
             raise Exception('Bad joint limits! try running roslaunch with option "limited:=true"')
 
-        #ur5.goto_pose_target(target_pose)
 
         br = tf.TransformBroadcaster()
 
@@ -85,12 +79,38 @@ def servo_to_obj():
                              "cam1",
                              "base_link")
 
+            curr_pos = np.zeros(3)
+            curr_pos[0] = curr_pose.position.x
+            curr_pos[1] = curr_pose.position.y
+            curr_pos[2] = curr_pose.position.z
+            
+            curr_rot = np.zeros(4)
+            curr_rot[0] = curr_pose.orientation.x
+            curr_rot[1] = curr_pose.orientation.y
+            curr_rot[2] = curr_pose.orientation.z
+            curr_rot[3] = curr_pose.orientation.w
+
+            T_C_A = np.eye(4)
+            T_C_A[:3,3] = curr_pos
+            T_C_A[:3,:3] = R.from_quat(curr_rot).as_dcm()
+            
+            # we want to find now T_O_A
+            T_O_A = T_O_C1.dot(T_C_A)
+
+
             r3 = R.from_dcm(T_O_A[:3,:3])
             br.sendTransform(T_O_A[:3,3],
                               r3.as_quat(),
                               rospy.Time.now(),
                               "obj",
                               "base_link")
+
+            # get gripper rotation
+            target_pose = ur5.get_pose()
+            target_pose.position.x = T_O_A[0,3]
+            target_pose.position.y = T_O_A[1,3]
+            target_pose.position.z = T_O_A[2,3] + 0.3
+            ur5.goto_pose_target(target_pose)
     except KeyboardInterrupt:
         ur5.stop()
         print("UR stopped")
