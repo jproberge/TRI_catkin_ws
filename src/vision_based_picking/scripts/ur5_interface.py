@@ -9,11 +9,14 @@
 import os
 import sys
 import time
+
+from geometry_msgs.msg import Point, Pose, PoseStamped, Quaternion
 import roslib; roslib.load_manifest('ur_driver')
 import rospy
 import moveit_commander
 import moveit_msgs.msg
 import numpy as np
+from std_msgs.msg import Header
 
 
 class UR5Interface:
@@ -22,7 +25,7 @@ class UR5Interface:
     joint_names = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint',
                    'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
 
-    joint_values_home = [1.4426736366647526, -1.9116037148601706, 2.0718699175826867, -1.7269285345190166, -1.5725291616141668, 1.442185460127628]
+    joint_values_home = [1.5450898256183896, -1.810624635807664, 2.258478488681325, -2.0176230710216156, -1.5706590472860515, 3.1148891041905493]
 
     def __init__(self):
         self.robot = moveit_commander.RobotCommander()
@@ -36,6 +39,44 @@ class UR5Interface:
         self.goal_state_publisher = rospy.Publisher('/rviz/moveit/update_custom_goal_state',
                                                         moveit_msgs.msg.RobotState,
                                                         queue_size=20)
+
+        # Walls are defined with respect to the coordinate frame of the robot base, with directions corresponding
+        # to standing behind the robot and facing into the table.
+        rospy.sleep(0.6)
+        header = Header()
+        header.stamp = rospy.Time.now()
+        header.frame_id = 'world'
+        # self.robot.get_planning_frame()
+        table_pose = PoseStamped()
+        table_pose.header = header
+        table_pose.pose.position.x = 0
+        table_pose.pose.position.y = 0
+        table_pose.pose.position.z = -0.0001
+        self.scene.remove_world_object('table')
+        self.scene.add_plane(name='table', pose=table_pose, normal=(0, 0, 1))
+        back_pose = PoseStamped()
+        back_pose.header = header
+        back_pose.pose.position.x = 0
+        back_pose.pose.position.y = -0.25
+        back_pose.pose.position.z = 0
+        self.scene.remove_world_object('backWall')
+        self.scene.add_plane(name='backWall', pose=back_pose, normal=(0, 1, 0))
+        right_pose = PoseStamped()
+        right_pose.header = header
+        right_pose.pose.position.x = 0.2
+        right_pose.pose.position.y = 0
+        right_pose.pose.position.z = 0
+        self.scene.remove_world_object('rightWall')
+        self.scene.add_plane(name='rightWall', pose=right_pose, normal=(1, 0, 0))
+        left_pose = PoseStamped()
+        left_pose.header = header
+        left_pose.pose.position.x = -0.54
+        left_pose.pose.position.y = 0
+        left_pose.pose.position.z = 0
+        self.scene.remove_world_object('leftWall')
+        self.scene.add_plane(name='leftWall', pose=left_pose, normal=(1, 0, 0))
+        rospy.sleep(0.6)
+        rospy.loginfo(self.scene.get_known_object_names())
 
         ## Getting Basic Information
         ## ^^^^^^^^^^^^^^^^^^^^^^^^^
