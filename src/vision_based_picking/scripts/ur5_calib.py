@@ -19,6 +19,7 @@ from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output  as ou
 from vision_based_picking.srv import Calibrate, CalibrateResponse, Acquire, AcquireResponse
 from ur5_interface import UR5Interface
 import numpy as np
+import copy
 
 
 
@@ -95,13 +96,13 @@ def led_based_calib():
 
         ### go to P1
         ur5.goto_home_pose()
-
+        home_pose = ur5.get_pose()
         ### sampling P1
         if CAMERA1_ON: P1_C1 = sample_led(1)
         if CAMERA2_ON: P1_C2 = sample_led(2)
 
         ### go to P2
-        P2_pose = ur5.get_pose()
+        P2_pose = copy.deepcopy(home_pose)
         P2_pose.position.x += 0.1
         ur5.goto_pose_target(P2_pose)
 
@@ -110,7 +111,7 @@ def led_based_calib():
         if CAMERA2_ON: P2_C2 = sample_led(2)
 
         ### go to P3
-        P3_pose = ur5.get_pose()
+        P3_pose = copy.deepcopy(home_pose)
         P3_pose.position.z += 0.1
         ur5.goto_pose_target(P3_pose)
 
@@ -133,7 +134,7 @@ def led_based_calib():
         T_F_6[:3,3] = np.array([0.0, 0.0375, -0.0115])
 
         T_O_6 = np.eye(4)
-        T_O_6[:3,3] = np.array([-0.15,0.35,0.25])
+        T_O_6[:3,3] = np.array([-0.1,0.35,0.25])
 
 
         if CAMERA1_ON: 
@@ -173,7 +174,6 @@ CAMERA1_ON = True       # Camera 934222070335
 CAMERA2_ON = False      # Camera 934222071824
 
 if __name__ == '__main__': 
-
     if PERFORM_CALIBRATION:
         # uncomment test move to perform a calibration
         led_based_calib()

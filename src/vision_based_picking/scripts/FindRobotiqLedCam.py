@@ -22,7 +22,6 @@ import copy
 from ctypes import *  # convert float to uint32
 
 import rospy
-from std_msgs.msg import Header
 from sensor_msgs.msg import PointCloud2, PointField
 from vision_based_picking.srv import Calibrate, CalibrateResponse
 import sensor_msgs.point_cloud2 as pc2

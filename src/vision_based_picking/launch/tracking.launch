@@ -1,13 +1,14 @@
 <launch>
   <!-- launch bayesian tracker -->
-  <include file="$(find dbot_ros)/launch/object_tracker_service.launch"/>
+  <!-- <include file="$(find dbot_ros)/launch/object_tracker_service.launch"/> -->
+  <include file="$(find dbot_ros)/launch/particle_tracker.launch"/>
 
   <!-- launch tag tracker -->
-  <include file="$(find apriltag_ros)/launch/continuous_detection.launch">
-    <arg name="camera_name" value="/camera/color"/>
-    <arg name="image_topic" value="image_raw"/>
-    <arg name="camera_frame" value="camera_color_frame"/>
-  </include>
+  <!-- <include file="$(find apriltag_ros)/launch/continuous_detection.launch"> -->
+   <!-- <arg name="camera_name" value="/camera/color"/> -->
+   <!-- <arg name="image_topic" value="image_raw"/> -->
+   <!-- <arg name="camera_frame" value="camera_color_frame"/> -->
+  <!-- </include> -->
 
   <!-- Run realsense cameras -->
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">

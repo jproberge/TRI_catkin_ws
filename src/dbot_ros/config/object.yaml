@@ -2,6 +2,6 @@
 object:
   package:    object_meshes
   directory:  object_models
-  meshes:     [ bowl_meter.obj ,robotiqGripper_meter.obj ]
+  meshes:     [ ur5Wrist_meter.obj, bowl_meter.obj ]
 
 

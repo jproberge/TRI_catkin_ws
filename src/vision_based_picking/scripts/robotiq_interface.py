@@ -50,7 +50,10 @@ class RobotiqInterface:
     def __del__(self):
         self.proc.kill()
 
-    def goto_gripper_pos(self, pos):
+    def goto_gripper_pos(self, pos, wait=True):
+        if (wait):
+            print("============ Gripper about to move. Press `Enter` to continue  ...")
+            raw_input()
         if (pos < 0) or (pos > 255):
             print("Robotiq Gripper bad position input")
         self.command.rPR = pos
